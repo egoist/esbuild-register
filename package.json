@@ -19,7 +19,8 @@
   "dependencies": {
     "pirates": "^4.0.1",
     "source-map-support": "^0.5.19",
-    "strip-json-comments": "^3.1.1"
+    "strip-json-comments": "^3.1.1",
+    "joycon": "^2.2.5"
   },
   "devDependencies": {
     "@egoist/prettier-config": "^0.1.0",
@@ -29,7 +30,6 @@
     "esbuild-register": "^1.0.1",
     "esm": "^3.2.25",
     "execa": "^4.0.3",
-    "joycon": "^2.2.5",
     "tsup": "^2.0.3",
     "typescript": "^3.9.6",
     "uvu": "^0.2.2"
