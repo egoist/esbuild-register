@@ -35,10 +35,15 @@ jobs:
         key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
         restore-keys: |
           ${{ runner.os }}-yarn-
+    - uses: actions/cache@v2
+      with:
+        path: ~/.npm
+        key: ${{ runner.os }}-npm-
+        restore-keys: |
+          ${{ runner.os }}-npm-
     - run: yarn
     - run: yarn test
-    - run: yarn global add semantic-release
-    - run: semantic-release
+    - run: npx semantic-release
       env:
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
