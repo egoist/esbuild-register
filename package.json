@@ -2,9 +2,12 @@
   "name": "esbuild-register",
   "description": "Transpile JSX, TypeScript and esnext features on the fly with esbuild",
   "version": "0.0.0",
-  "main": "dist/register.js",
+  "main": "register.js",
   "license": "MIT",
-  "files": "dist",
+  "files": [
+    "dist",
+    "/register.js"
+  ],
   "scripts": {
     "build": "tsup src/node.ts",
     "test": "npm run build && node -r esm -r . tests/test.ts",
