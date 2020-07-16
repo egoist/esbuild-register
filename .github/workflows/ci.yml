@@ -24,15 +24,21 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
+    - name: Get yarn cache directory path
+      id: yarn-cache-dir-path
+      run: echo "::set-output name=dir::$(yarn cache dir)"
+    
     - uses: actions/cache@v2
+      id: yarn-cache
       with:
-        path: ~/.npm
-        key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+        path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+        key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
         restore-keys: |
-          ${{ runner.os }}-node-
-    - run: npm ci
-    - run: npm test
-    - run: npx semantic-release
+          ${{ runner.os }}-yarn-
+    - run: yarn
+    - run: yarn test
+    - run: yarn global add semantic-release
+    - run: semantic-release
       env:
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         NPM_TOKEN: ${{ secrets.NPM_TOKEN }}

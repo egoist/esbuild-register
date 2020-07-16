@@ -10,7 +10,7 @@
   ],
   "scripts": {
     "build": "tsup src/node.ts",
-    "test": "npm run build && node -r esm -r . tests/test.ts",
+    "test": "npm run build && node -r esm -r esbuild-register tests/test.ts",
     "prepublishOnly": "npm run build"
   },
   "peerDependencies": {
@@ -26,6 +26,7 @@
     "@types/node": "^14.0.23",
     "@types/source-map-support": "^0.5.2",
     "esbuild": "^0.6.3",
+    "esbuild-register": "^1.0.1",
     "esm": "^3.2.25",
     "execa": "^4.0.3",
     "joycon": "^2.2.5",
