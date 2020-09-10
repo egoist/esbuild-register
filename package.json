@@ -10,25 +10,26 @@
   ],
   "scripts": {
     "build": "tsup src/node.ts",
-    "test": "npm run build && node -r esm -r esbuild-register tests/test.ts",
+    "test": "npm run build && node -r ./register.js tests/test.ts",
     "prepublishOnly": "npm run build"
   },
   "peerDependencies": {
     "esbuild": "^0.6.3"
   },
   "dependencies": {
+    "atob": "^2.1.2",
+    "joycon": "^2.2.5",
     "pirates": "^4.0.1",
     "source-map-support": "^0.5.19",
-    "strip-json-comments": "^3.1.1",
-    "joycon": "^2.2.5"
+    "strip-json-comments": "^3.1.1"
   },
   "devDependencies": {
+    "@types/atob": "^2.1.2",
     "@egoist/prettier-config": "^0.1.0",
     "@types/node": "^14.0.23",
     "@types/source-map-support": "^0.5.2",
-    "esbuild": "^0.6.3",
+    "esbuild": "^0.6.33",
     "esbuild-register": "^1.0.1",
-    "esm": "^3.2.25",
     "execa": "^4.0.3",
     "tsup": "^2.0.3",
     "typescript": "^3.9.6",

@@ -25,3 +25,8 @@ export const getOptions = (
   }
   return {}
 }
+
+export const getOptionsPath = (cwd: string): undefined | string => {
+  const { path } = joycon.loadSync(['tsconfig.json'], cwd)
+  return path
+}

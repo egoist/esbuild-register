@@ -1,9 +1,10 @@
 import { dirname } from 'path'
 import { RawSourceMap } from 'source-map'
 import sourceMapSupport from 'source-map-support'
-import { transformSync } from 'esbuild'
+import { buildSync } from 'esbuild'
 import { addHook } from 'pirates'
-import { getOptions } from './options'
+import atob from 'atob'
+import { getOptions, getOptionsPath } from './options'
 
 const map: { [file: string]: string | RawSourceMap } = {}
 
@@ -23,19 +24,44 @@ function installSourceMapSupport() {
   })
 }
 
+function getSourceMap(js: string): string {
+  const matched = js.match(
+    /\/\/# sourceMappingURL=data:application\/json;base64,.*\n?/,
+  )
+  const result = ((matched && matched[0]) || '')
+    .trim()
+    .replace(/\/\/# sourceMappingURL=data:application\/json;base64,/, '')
+  return atob(result)
+}
+
 const DEFAULT_EXTENSIONS = ['.js', '.jsx', '.ts', '.tsx', '.mjs']
 
 function compile(code: string, filename: string) {
   const options = getOptions(dirname(filename))
-  const { js, warnings, jsSourceMap } = transformSync(code, {
-    sourcefile: filename,
+  const optionsPath = getOptionsPath(dirname(filename))
+
+  const { warnings, outputFiles } = buildSync({
+    // tsconfig options
+    tsconfig: optionsPath,
+    target: optionsPath ? '' : options.target,
+    jsxFactory: optionsPath ? '' : options.jsxFactory,
+    jsxFragment: optionsPath ? '' : options.jsxFragment,
+    // TODO: support process.argv options, sourcemap, format and stdin.loader
     sourcemap: true,
-    // Just use tsx for everything until we find a way to let user configure this
-    loader: 'tsx',
-    target: options.target,
-    jsxFactory: options.jsxFactory,
-    jsxFragment: options.jsxFragment,
+    format: 'cjs',
+    write: false,
+    stdin: {
+      loader: 'tsx',
+      sourcefile: filename,
+      contents: code,
+    },
   })
+
+  const js = new TextDecoder('utf-8').decode(
+    outputFiles?.find((_) => _)?.contents,
+  )
+  const jsSourceMap = getSourceMap(js)
+
   map[filename] = jsSourceMap
   if (warnings && warnings.length > 0) {
     for (const warning of warnings) {
