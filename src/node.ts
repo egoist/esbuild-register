@@ -43,9 +43,9 @@ function compile(code: string, filename: string) {
   const { warnings, outputFiles } = buildSync({
     // tsconfig options
     tsconfig: optionsPath,
-    target: optionsPath ? '' : options.target,
-    jsxFactory: optionsPath ? '' : options.jsxFactory,
-    jsxFragment: optionsPath ? '' : options.jsxFragment,
+    target: optionsPath ? undefined : options.target,
+    jsxFactory: optionsPath ? undefined : options.jsxFactory,
+    jsxFragment: optionsPath ? undefined : options.jsxFragment,
     // TODO: support process.argv options, sourcemap, format and stdin.loader
     sourcemap: true,
     format: 'cjs',
