@@ -39,14 +39,17 @@ const DEFAULT_EXTENSIONS = ['.js', '.jsx', '.ts', '.tsx', '.mjs']
 function compile(code: string, filename: string) {
   const options = getOptions(dirname(filename))
   const optionsPath = getOptionsPath(dirname(filename))
+  const logLevel: 'error' | 'info' | 'warning' | 'silent' | undefined = 'error'
 
   const { warnings, outputFiles } = buildSync({
     // tsconfig options
     tsconfig: optionsPath,
-    target: optionsPath ? undefined : options.target,
+    // TODO: target should respect tsconfig
+    // target: optionsPath ? undefined : options.target,
+    target: options.target?.toLocaleLowerCase(),
     jsxFactory: optionsPath ? undefined : options.jsxFactory,
     jsxFragment: optionsPath ? undefined : options.jsxFragment,
-    // TODO: support process.argv options, sourcemap, format and stdin.loader
+    // TODO: support process.argv options, sourcemap, format, logLevel, stdin.loader
     sourcemap: true,
     format: 'cjs',
     write: false,
@@ -55,6 +58,7 @@ function compile(code: string, filename: string) {
       sourcefile: filename,
       contents: code,
     },
+    logLevel,
   })
 
   const js = new TextDecoder('utf-8').decode(
@@ -63,7 +67,10 @@ function compile(code: string, filename: string) {
   const jsSourceMap = getSourceMap(js)
 
   map[filename] = jsSourceMap
-  if (warnings && warnings.length > 0) {
+  if (
+    [undefined, 'info', 'warning'].includes(logLevel) &&
+    warnings.length > 0
+  ) {
     for (const warning of warnings) {
       console.log(warning.location)
       console.log(warning.text)
