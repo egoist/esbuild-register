@@ -1,4 +1,4 @@
-import { dirname } from 'path'
+import { dirname, extname } from 'path'
 import { RawSourceMap } from 'source-map'
 import sourceMapSupport from 'source-map-support'
 import { transformSync } from 'esbuild'
@@ -30,8 +30,7 @@ function compile(code: string, filename: string) {
   const { js, warnings, jsSourceMap } = transformSync(code, {
     sourcefile: filename,
     sourcemap: true,
-    // Just use tsx for everything until we find a way to let user configure this
-    loader: 'tsx',
+    loader: extname(filename).slice(1),
     target: options.target,
     jsxFactory: options.jsxFactory,
     jsxFragment: options.jsxFragment,
