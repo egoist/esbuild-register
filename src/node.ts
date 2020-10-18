@@ -4,7 +4,6 @@ import sourceMapSupport from 'source-map-support'
 import { transformSync } from 'esbuild'
 import { addHook } from 'pirates'
 import { getOptions } from './options'
-import { FILE } from 'dns'
 
 const map: { [file: string]: string | RawSourceMap } = {}
 
