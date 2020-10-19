@@ -14,4 +14,15 @@ test('register', async ()=> {
   assert.is(stdout, 'text')
 })
 
+test('register2', async ()=> {
+  const { stdout } = await execa('node', [
+    '-r',
+    'esm',
+    '-r',
+    `${process.cwd()}/register.js`,
+    `${process.cwd()}/tests/fixture.arrowFunction.ts`,
+  ])
+  assert.is(stdout, 'hello from ts')
+})
+
 test.run()

@@ -1,4 +1,4 @@
-import { dirname } from 'path'
+import { dirname, extname } from 'path'
 import { RawSourceMap } from 'source-map'
 import sourceMapSupport from 'source-map-support'
 import { transformSync } from 'esbuild'
@@ -23,15 +23,26 @@ function installSourceMapSupport() {
   })
 }
 
-const DEFAULT_EXTENSIONS = ['.js', '.jsx', '.ts', '.tsx', '.mjs']
+type EXTENSIONS = '.js' | '.jsx' | '.ts' |'.tsx'|'.mjs'
+type LOADERS = 'js' | 'jsx' | 'ts' |'tsx'
+const FILE_LOADERS: Record<EXTENSIONS, LOADERS> = {
+  '.js': 'js',
+  '.jsx': 'jsx',
+  '.ts': 'ts',
+  '.tsx': 'tsx',
+  '.mjs': 'js',
+};
+
+const DEFAULT_EXTENSIONS = Object.keys(FILE_LOADERS);
+
+const getLoader = (filename: string): LOADERS => FILE_LOADERS[extname(filename) as EXTENSIONS]
 
 function compile(code: string, filename: string) {
   const options = getOptions(dirname(filename))
   const { js, warnings, jsSourceMap } = transformSync(code, {
     sourcefile: filename,
     sourcemap: true,
-    // Just use tsx for everything until we find a way to let user configure this
-    loader: 'tsx',
+    loader: getLoader(filename),
     target: options.target,
     jsxFactory: options.jsxFactory,
     jsxFragment: options.jsxFragment,
