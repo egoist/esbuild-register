@@ -10,11 +10,11 @@
   ],
   "scripts": {
     "build": "tsup src/node.ts",
-    "test": "npm run build && node -r esm -r esbuild-register tests/test.ts",
+    "test": "npm run build && node -r esm -r ./register.js tests/test.ts",
     "prepublishOnly": "npm run build"
   },
   "peerDependencies": {
-    "esbuild": "^0.6.3"
+    "esbuild": "^0.8.0"
   },
   "dependencies": {
     "pirates": "^4.0.1",
@@ -26,8 +26,7 @@
     "@egoist/prettier-config": "^0.1.0",
     "@types/node": "^14.0.23",
     "@types/source-map-support": "^0.5.2",
-    "esbuild": "^0.6.3",
-    "esbuild-register": "^1.0.1",
+    "esbuild": "^0.8.0",
     "esm": "^3.2.25",
     "execa": "^4.0.3",
     "tsup": "^2.0.3",

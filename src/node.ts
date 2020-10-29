@@ -39,7 +39,7 @@ const getLoader = (filename: string): LOADERS => FILE_LOADERS[extname(filename) 
 
 function compile(code: string, filename: string) {
   const options = getOptions(dirname(filename))
-  const { js, warnings, jsSourceMap } = transformSync(code, {
+  const { code: js, warnings, map: jsSourceMap } = transformSync(code, {
     sourcefile: filename,
     sourcemap: true,
     loader: getLoader(filename),
