@@ -24,6 +24,17 @@ When using Yarn, you can add an npm script:
 
 to shorten the command, now just run `yarn ts file.ts` instead.
 
+## Programmatic Usage
+
+```ts
+const { register } = require('esbuild-register/dist/node')
+
+register({
+  // ...options
+})
+```
+
 ## License
 
 MIT &copy; [EGOIST (Kevin Titor)](https://egoist.sh)
+w
