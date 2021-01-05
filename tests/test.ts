@@ -1,9 +1,9 @@
 import path from 'path'
-import {test} from 'uvu'
+import { test } from 'uvu'
 import assert from 'uvu/assert'
 import execa from 'execa'
 
-test('register', async ()=> {
+test('register', async () => {
   const { stdout } = await execa('node', [
     '-r',
     'esm',
@@ -14,7 +14,7 @@ test('register', async ()=> {
   assert.is(stdout, 'text')
 })
 
-test('register2', async ()=> {
+test('register2', async () => {
   const { stdout } = await execa('node', [
     '-r',
     'esm',
@@ -23,6 +23,15 @@ test('register2', async ()=> {
     `${process.cwd()}/tests/fixture.arrowFunction.ts`,
   ])
   assert.is(stdout, 'hello from ts')
+})
+
+test('register cjs', async () => {
+  const { stdout } = await execa('node', [
+    '-r',
+    `${process.cwd()}/register.js`,
+    `${process.cwd()}/tests/fixture.cjs.ts`,
+  ])
+  assert.is(stdout, 'fs imported')
 })
 
 test.run()

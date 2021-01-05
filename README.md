@@ -3,12 +3,10 @@
 ## Install
 
 ```bash
-yarn add esm esbuild-register --dev
+yarn add esbuild-register --dev
 ```
 
-You need [`esm`](https://github.com/standard-things/esm) as well because `esbuild` doesn't compile `import` and `export` statements to commonjs `require`.
-
-[`esbuild`](https://github.com/evanw/esbuild) is also required as a peer dependency.
+[`esbuild`](https://github.com/evanw/esbuild) is required as a peer dependency.
 
 ## Usage
 
