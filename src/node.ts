@@ -23,22 +23,27 @@ function installSourceMapSupport() {
   })
 }
 
-type EXTENSIONS = '.js' | '.jsx' | '.ts' | '.tsx' | '.mjs'
 type LOADERS = 'js' | 'jsx' | 'ts' | 'tsx'
-const FILE_LOADERS: Record<EXTENSIONS, LOADERS> = {
+const FILE_LOADERS = {
   '.js': 'js',
   '.jsx': 'jsx',
   '.ts': 'ts',
   '.tsx': 'tsx',
   '.mjs': 'js',
-}
+} as const
+
+type EXTENSIONS = keyof typeof FILE_LOADERS
 
 const DEFAULT_EXTENSIONS = Object.keys(FILE_LOADERS)
 
 const getLoader = (filename: string): LOADERS =>
   FILE_LOADERS[extname(filename) as EXTENSIONS]
 
-export function register(esbuildOptions: TransformOptions = {}) {
+export function register(
+  esbuildOptions: TransformOptions & { extensions?: EXTENSIONS[] } = {},
+) {
+  const { extensions = DEFAULT_EXTENSIONS, ...overrides } = esbuildOptions
+
   function compile(code: string, filename: string) {
     const options = getOptions(dirname(filename))
     const { code: js, warnings, map: jsSourceMap } = transformSync(code, {
@@ -48,7 +53,7 @@ export function register(esbuildOptions: TransformOptions = {}) {
       target: options.target,
       jsxFactory: options.jsxFactory,
       jsxFragment: options.jsxFragment,
-      ...esbuildOptions,
+      ...overrides,
     })
     map[filename] = jsSourceMap
     if (warnings && warnings.length > 0) {
@@ -61,6 +66,6 @@ export function register(esbuildOptions: TransformOptions = {}) {
   }
   installSourceMapSupport()
   addHook(compile, {
-    exts: DEFAULT_EXTENSIONS,
+    exts: extensions,
   })
 }
