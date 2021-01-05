@@ -11,7 +11,7 @@ yarn add esbuild-register --dev
 ## Usage
 
 ```bash
-node -r esm -r esbuild-register file.ts
+node -r esbuild-register file.ts
 ```
 
 It will use `jsxFactory`, `jsxFragmentFactory` and `target` options from your `tsconfig.json`

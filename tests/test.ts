@@ -6,8 +6,6 @@ import execa from 'execa'
 test('register', async () => {
   const { stdout } = await execa('node', [
     '-r',
-    'esm',
-    '-r',
     `${process.cwd()}/register.js`,
     `${process.cwd()}/tests/fixture.ts`,
   ])
@@ -16,8 +14,6 @@ test('register', async () => {
 
 test('register2', async () => {
   const { stdout } = await execa('node', [
-    '-r',
-    'esm',
     '-r',
     `${process.cwd()}/register.js`,
     `${process.cwd()}/tests/fixture.arrowFunction.ts`,
