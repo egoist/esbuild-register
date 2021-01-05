@@ -36,5 +36,5 @@ register({
 
 ## License
 
-MIT &copy; [EGOIST (Kevin Titor)](https://egoist.sh)
+MIT &copy; [EGOIST](https://egoist.sh)
 w
