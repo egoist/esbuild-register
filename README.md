@@ -3,17 +3,15 @@
 ## Install
 
 ```bash
-yarn add esm esbuild-register --dev
+yarn add esbuild-register --dev
 ```
 
-You need [`esm`](https://github.com/standard-things/esm) as well because `esbuild` doesn't compile `import` and `export` statements to commonjs `require`.
-
-[`esbuild`](https://github.com/evanw/esbuild) is also required as a peer dependency.
+[`esbuild`](https://github.com/evanw/esbuild) is required as a peer dependency.
 
 ## Usage
 
 ```bash
-node -r esm -r esbuild-register file.ts
+node -r esbuild-register file.ts
 ```
 
 It will use `jsxFactory`, `jsxFragmentFactory` and `target` options from your `tsconfig.json`
@@ -21,11 +19,22 @@ It will use `jsxFactory`, `jsxFragmentFactory` and `target` options from your `t
 When using Yarn, you can add an npm script:
 
 ```json
-"ts": "node -r esm -r esbuild-register"
+"ts": "node -r esbuild-register"
 ```
 
 to shorten the command, now just run `yarn ts file.ts` instead.
 
+## Programmatic Usage
+
+```ts
+const { register } = require('esbuild-register/dist/node')
+
+register({
+  // ...options
+})
+```
+
 ## License
 
 MIT &copy; [EGOIST (Kevin Titor)](https://egoist.sh)
+w
