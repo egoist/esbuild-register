@@ -19,7 +19,7 @@ It will use `jsxFactory`, `jsxFragmentFactory` and `target` options from your `t
 When using Yarn, you can add an npm script:
 
 ```json
-"ts": "node -r esm -r esbuild-register"
+"ts": "node -r esbuild-register"
 ```
 
 to shorten the command, now just run `yarn ts file.ts` instead.
