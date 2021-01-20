@@ -48,7 +48,7 @@ export function register(
     const options = getOptions(dirname(filename))
     const { code: js, warnings, map: jsSourceMap } = transformSync(code, {
       sourcefile: filename,
-      sourcemap: true,
+      sourcemap: 'both',
       loader: getLoader(filename),
       target: options.target,
       jsxFactory: options.jsxFactory,
