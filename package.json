@@ -14,7 +14,7 @@
     "prepublishOnly": "npm run build"
   },
   "peerDependencies": {
-    "esbuild": ">=0.8.0"
+    "esbuild": ">=0.8.31"
   },
   "dependencies": {
     "pirates": "^4.0.1",
@@ -26,7 +26,7 @@
     "@egoist/prettier-config": "^0.1.0",
     "@types/node": "^14.0.23",
     "@types/source-map-support": "^0.5.2",
-    "esbuild": "^0.8.0",
+    "esbuild": "^0.8.31",
     "execa": "^4.0.3",
     "tsup": "^2.0.3",
     "typescript": "^3.9.6",
