@@ -25,3 +25,17 @@ export const getOptions = (
   }
   return {}
 }
+
+export const inferPackageFormat = (
+  cwd: string,
+  filename: string,
+): 'esm' | 'cjs' => {
+  if (filename.endsWith('.mjs')) {
+    return 'esm'
+  }
+  if (filename.endsWith('.cjs')) {
+    return 'cjs'
+  }
+  const { data } = joycon.loadSync(['package.json'], cwd)
+  return data && data.type === 'module' ? 'esm' : 'cjs'
+}

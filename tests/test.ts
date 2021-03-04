@@ -1,4 +1,3 @@
-import path from 'path'
 import { test } from 'uvu'
 import assert from 'uvu/assert'
 import execa from 'execa'
@@ -28,6 +27,15 @@ test('register cjs', async () => {
     `${process.cwd()}/tests/fixture.cjs.ts`,
   ])
   assert.is(stdout, 'fs imported')
+})
+
+test('package type module', async () => {
+  const { stdout } = await execa('node', [
+    '-r',
+    `${process.cwd()}/register.js`,
+    `${process.cwd()}/tests/fixture-type-module/index.js`,
+  ])
+  assert.is(stdout, 'foo')
 })
 
 test.run()

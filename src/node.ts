@@ -3,7 +3,7 @@ import type { RawSourceMap } from 'source-map'
 import sourceMapSupport from 'source-map-support'
 import { transformSync, TransformOptions } from 'esbuild'
 import { addHook } from 'pirates'
-import { getOptions } from './options'
+import { getOptions, inferPackageFormat } from './options'
 
 const map: { [file: string]: string | RawSourceMap } = {}
 
@@ -45,7 +45,10 @@ export function register(
   const { extensions = DEFAULT_EXTENSIONS, ...overrides } = esbuildOptions
 
   function compile(code: string, filename: string) {
-    const options = getOptions(dirname(filename))
+    const dir = dirname(filename)
+    const options = getOptions(dir)
+    const format = inferPackageFormat(dir, filename)
+
     const { code: js, warnings, map: jsSourceMap } = transformSync(code, {
       sourcefile: filename,
       sourcemap: 'both',
@@ -53,6 +56,7 @@ export function register(
       target: options.target,
       jsxFactory: options.jsxFactory,
       jsxFragment: options.jsxFragment,
+      format,
       ...overrides,
     })
     map[filename] = jsSourceMap
