@@ -3,6 +3,8 @@
 ## Install
 
 ```bash
+npm i esbuild-register -D
+# Or Yarn
 yarn add esbuild-register --dev
 ```
 
