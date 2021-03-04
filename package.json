@@ -26,9 +26,9 @@
     "@egoist/prettier-config": "^0.1.0",
     "@types/node": "^14.0.23",
     "@types/source-map-support": "^0.5.2",
-    "esbuild": "^0.8.31",
+    "esbuild": "^0.8.55",
     "execa": "^4.0.3",
-    "tsup": "^2.0.3",
+    "tsup": "^4.6.1",
     "typescript": "^3.9.6",
     "uvu": "^0.2.2"
   }
