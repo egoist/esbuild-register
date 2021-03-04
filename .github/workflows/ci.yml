@@ -5,13 +5,12 @@ name: Node.js CI
 
 on:
   push:
-    branches: [ master ]
+    branches: [master]
   pull_request:
-    branches: [ master ]
+    branches: [master]
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     strategy:
@@ -19,14 +18,14 @@ jobs:
         node-version: [14.x]
 
     steps:
-    - uses: actions/checkout@v2
+      - uses: actions/checkout@v2
 
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v1
-      with:
-        node-version: ${{ matrix.node-version }}
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
 
-    - name: Cache ~/.pnpm-store
+      - name: Cache ~/.pnpm-store
         uses: actions/cache@v2
         env:
           cache-name: cache-pnpm-store
@@ -37,16 +36,16 @@ jobs:
             ${{ runner.os }}-${{ matrix.node-version }}-build-${{ env.cache-name }}-
             ${{ runner.os }}-${{ matrix.node-version }}-build-
             ${{ runner.os }}-
-            
-    - name: Install pnpm
-      run: npm i -g pnpm
 
-    - name: Install deps
-      run: pnpm i
+      - name: Install pnpm
+        run: npm i -g pnpm
 
-    - run: pnpm test
+      - name: Install deps
+        run: pnpm i
 
-    - run: pnpx semantic-release
-      env:
-        GH_TOKEN: ${{ secrets.GH_TOKEN }}
-        NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - run: pnpm test
+
+      - run: pnpx semantic-release
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
