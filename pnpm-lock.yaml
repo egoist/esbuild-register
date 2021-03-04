@@ -1,16 +1,16 @@
-dependencies:
-  joycon: 2.2.5
-  pirates: 4.0.1
-  source-map-support: 0.5.19
-  strip-json-comments: 3.1.1
 devDependencies:
   '@egoist/prettier-config': 0.1.0
   '@types/node': 14.14.31
   '@types/source-map-support': 0.5.3
   esbuild: 0.8.55
   execa: 4.1.0
-  tsup: 4.6.1_typescript@3.9.9
-  typescript: 3.9.9
+  joycon: 2.2.5
+  pirates: 4.0.1
+  source-map: 0.6.1
+  source-map-support: 0.5.19
+  strip-json-comments: 3.1.1
+  tsup: 4.6.1_typescript@4.2.2
+  typescript: 4.2.2
   uvu: 0.2.3
 lockfileVersion: 5.2
 packages:
@@ -174,7 +174,7 @@ packages:
     resolution:
       integrity: sha512-b8um+L1RzM3WDSzvhm6gIz1yfTbBt6YTlcEKAvsmqCZZFw46z626lVj9j1yEPW33H5H+lBQpZMP1k8l+78Ha0A==
   /buffer-from/1.1.1:
-    dev: false
+    dev: true
     resolution:
       integrity: sha512-MQcXEUbCKtEo7bhqEs6560Hyd4XaovZlO/k9V3hjVUF/zwW7KBVdSK4gIt/bzwS9MbR5qob+F5jusZsb0YQK2A==
   /builtin-modules/3.2.0:
@@ -559,6 +559,7 @@ packages:
     resolution:
       integrity: sha1-6PvzdNxVb/iUehDcsFctYz8s+hA=
   /joycon/2.2.5:
+    dev: true
     engines:
       node: '>=6'
     resolution:
@@ -627,6 +628,7 @@ packages:
     resolution:
       integrity: sha512-z81GNO7nnYMEhrGh9LeymoE4+Yr0Wn5McHIZMK5cfQCl+NDX08sCZgUc9/6MHni9IWuFLm1Z3HTCXu2z9fN62Q==
   /node-modules-regexp/1.0.0:
+    dev: true
     engines:
       node: '>=0.10.0'
     resolution:
@@ -715,6 +717,7 @@ packages:
   /pirates/4.0.1:
     dependencies:
       node-modules-regexp: 1.0.0
+    dev: true
     engines:
       node: '>= 6'
     resolution:
@@ -824,10 +827,11 @@ packages:
     dependencies:
       buffer-from: 1.1.1
       source-map: 0.6.1
-    dev: false
+    dev: true
     resolution:
       integrity: sha512-Wonm7zOCIJzBGQdB+thsPar0kYuCIzYvxZwlBa87yi/Mdjv7Tip2cyVbLj5o0cFPN4EVkuTwb3GDDyUx2DGnGw==
   /source-map/0.6.1:
+    dev: true
     engines:
       node: '>=0.10.0'
     resolution:
@@ -839,7 +843,7 @@ packages:
     resolution:
       integrity: sha512-BrpvfNAE3dcvq7ll3xVumzjKjZQ5tI1sEUIKr3Uoks0XUl45St3FlatVqef9prk4jRDzhW6WZg+3bk93y6pLjA==
   /strip-json-comments/3.1.1:
-    dev: false
+    dev: true
     engines:
       node: '>=8'
     resolution:
@@ -906,7 +910,7 @@ packages:
     dev: true
     resolution:
       integrity: sha512-Y/arvbn+rrz3JCKl9C4kVNfTfSm2/mEp5FSz5EsZSANGPSlQrpRI5M4PKF+mJnE52jOO90PnPSc3Ur3bTQw0gA==
-  /tsup/4.6.1_typescript@3.9.9:
+  /tsup/4.6.1_typescript@4.2.2:
     dependencies:
       '@rollup/plugin-node-resolve': 11.2.0_rollup@2.40.0
       cac: 6.7.2
@@ -919,7 +923,7 @@ packages:
       resolve-from: 5.0.0
       rollup: 2.40.0
       sucrase: 3.17.1
-      typescript: 3.9.9
+      typescript: 4.2.2
     dev: true
     hasBin: true
     peerDependencies:
@@ -929,13 +933,13 @@ packages:
         optional: true
     resolution:
       integrity: sha512-I6WBrNqEdX2cUhr4Aj8TjAC6WKqMdtCyKDuiKgp4U09xnpjlbUbbaS7Y/AF5YNOX6BsISuF4J4hS0gM1qQieVQ==
-  /typescript/3.9.9:
+  /typescript/4.2.2:
     dev: true
     engines:
       node: '>=4.2.0'
     hasBin: true
     resolution:
-      integrity: sha512-kdMjTiekY+z/ubJCATUPlRDl39vXYiMV9iyeMuEuXZh2we6zz80uovNN2WlAxmmdE/Z/YQe+EbOEXB5RHEED3w==
+      integrity: sha512-tbb+NVrLfnsJy3M59lsDgrzWIflR4d4TIUjz+heUnHZwdF7YsrMTKoRERiIvI2lvBG95dfpLxB21WZhys1bgaQ==
   /uvu/0.2.3:
     dependencies:
       dequal: 1.0.1
@@ -971,13 +975,14 @@ packages:
 specifiers:
   '@egoist/prettier-config': ^0.1.0
   '@types/node': ^14.0.23
-  '@types/source-map-support': ^0.5.2
+  '@types/source-map-support': ^0.5.3
   esbuild: ^0.8.55
   execa: ^4.0.3
   joycon: ^2.2.5
   pirates: ^4.0.1
+  source-map: ^0.6.0
   source-map-support: ^0.5.19
   strip-json-comments: ^3.1.1
   tsup: ^4.6.1
-  typescript: ^3.9.6
+  typescript: ^4.2.2
   uvu: ^0.2.2

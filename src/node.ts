@@ -1,5 +1,5 @@
 import { dirname, extname } from 'path'
-import { RawSourceMap } from 'source-map'
+import type { RawSourceMap } from 'source-map'
 import sourceMapSupport from 'source-map-support'
 import { transformSync, TransformOptions } from 'esbuild'
 import { addHook } from 'pirates'
