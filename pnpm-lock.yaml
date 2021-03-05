@@ -5,10 +5,10 @@ devDependencies:
   esbuild: 0.8.55
   execa: 4.1.0
   joycon: 2.2.5
+  jsonc-parser: 3.0.0
   pirates: 4.0.1
   source-map: 0.6.1
   source-map-support: 0.5.19
-  strip-json-comments: 3.1.1
   tsup: 4.6.1_typescript@4.2.2
   typescript: 4.2.2
   uvu: 0.2.3
@@ -572,6 +572,10 @@ packages:
     dev: true
     resolution:
       integrity: sha512-xyFwyhro/JEof6Ghe2iz2NcXoj2sloNsWr/XsERDK/oiPCfaNhl5ONfp+jQdAZRQQ0IJWNzH9zIZF7li91kh2w==
+  /jsonc-parser/3.0.0:
+    dev: true
+    resolution:
+      integrity: sha512-fQzRfAbIBnR0IQvftw9FJveWiHp72Fg20giDrHz6TdfB12UH/uue0D3hm57UB5KgAVuniLMCaS8P1IMj9NR7cA==
   /kleur/4.1.4:
     dev: true
     engines:
@@ -842,12 +846,6 @@ packages:
       node: '>=6'
     resolution:
       integrity: sha512-BrpvfNAE3dcvq7ll3xVumzjKjZQ5tI1sEUIKr3Uoks0XUl45St3FlatVqef9prk4jRDzhW6WZg+3bk93y6pLjA==
-  /strip-json-comments/3.1.1:
-    dev: true
-    engines:
-      node: '>=8'
-    resolution:
-      integrity: sha512-6fPc+R4ihwqP6N/aIv2f1gMH8lOVtWQHoqC4yK6oSDVVocumAsfCqjkXnqiYMhmMwS/mEHLp7Vehlt3ql6lEig==
   /sucrase/3.17.1:
     dependencies:
       commander: 4.1.1
@@ -979,10 +977,10 @@ specifiers:
   esbuild: ^0.8.55
   execa: ^4.0.3
   joycon: ^2.2.5
+  jsonc-parser: ^3.0.0
   pirates: ^4.0.1
   source-map: ^0.6.0
   source-map-support: ^0.5.19
-  strip-json-comments: ^3.1.1
   tsup: ^4.6.1
   typescript: ^4.2.2
   uvu: ^0.2.2
