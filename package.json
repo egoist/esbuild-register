@@ -16,6 +16,9 @@
   "peerDependencies": {
     "esbuild": ">=0.8.31"
   },
+  "dependencies": {
+    "jsonc-parser": "^3.0.0"
+  },
   "devDependencies": {
     "@egoist/prettier-config": "^0.1.0",
     "@types/node": "^14.0.23",
@@ -23,7 +26,6 @@
     "esbuild": "^0.8.55",
     "execa": "^4.0.3",
     "joycon": "^2.2.5",
-    "jsonc-parser": "^3.0.0",
     "pirates": "^4.0.1",
     "source-map": "^0.6.0",
     "source-map-support": "^0.5.19",

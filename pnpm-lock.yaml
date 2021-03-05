@@ -1,3 +1,5 @@
+dependencies:
+  jsonc-parser: 3.0.0
 devDependencies:
   '@egoist/prettier-config': 0.1.0
   '@types/node': 14.14.31
@@ -5,7 +7,6 @@ devDependencies:
   esbuild: 0.8.55
   execa: 4.1.0
   joycon: 2.2.5
-  jsonc-parser: 3.0.0
   pirates: 4.0.1
   source-map: 0.6.1
   source-map-support: 0.5.19
@@ -573,7 +574,7 @@ packages:
     resolution:
       integrity: sha512-xyFwyhro/JEof6Ghe2iz2NcXoj2sloNsWr/XsERDK/oiPCfaNhl5ONfp+jQdAZRQQ0IJWNzH9zIZF7li91kh2w==
   /jsonc-parser/3.0.0:
-    dev: true
+    dev: false
     resolution:
       integrity: sha512-fQzRfAbIBnR0IQvftw9FJveWiHp72Fg20giDrHz6TdfB12UH/uue0D3hm57UB5KgAVuniLMCaS8P1IMj9NR7cA==
   /kleur/4.1.4:
