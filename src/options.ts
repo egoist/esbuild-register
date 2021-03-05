@@ -1,6 +1,6 @@
 import fs from 'fs'
 import JoyCon from 'joycon'
-import strip from 'strip-json-comments'
+import { parse } from 'jsonc-parser'
 
 const joycon = new JoyCon()
 
@@ -8,7 +8,7 @@ joycon.addLoader({
   test: /\.json$/,
   loadSync: (file) => {
     const content = fs.readFileSync(file, 'utf8')
-    return JSON.parse(strip(content))
+    return parse(content)
   },
 })
 
