@@ -8,8 +8,6 @@ npm i esbuild-register -D
 yarn add esbuild-register --dev
 ```
 
-[`esbuild`](https://github.com/evanw/esbuild) is required as a peer dependency.
-
 ## Usage
 
 ```bash
