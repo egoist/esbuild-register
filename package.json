@@ -13,17 +13,14 @@
     "test": "npm run build && node -r ./register.js tests/test.ts",
     "prepublishOnly": "npm run build"
   },
-  "peerDependencies": {
-    "esbuild": "^0.8.31"
-  },
   "dependencies": {
+    "esbuild": "^0.9.2",
     "jsonc-parser": "^3.0.0"
   },
   "devDependencies": {
     "@egoist/prettier-config": "^0.1.0",
     "@types/node": "^14.0.23",
     "@types/source-map-support": "^0.5.3",
-    "esbuild": "^0.8.55",
     "execa": "^4.0.3",
     "joycon": "^2.2.5",
     "pirates": "^4.0.1",
