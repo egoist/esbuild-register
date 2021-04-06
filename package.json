@@ -14,7 +14,7 @@
     "prepublishOnly": "npm run build"
   },
   "dependencies": {
-    "esbuild": "^0.9.2",
+    "esbuild": "^0.11.5",
     "jsonc-parser": "^3.0.0"
   },
   "devDependencies": {
