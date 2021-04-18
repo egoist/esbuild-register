@@ -38,4 +38,13 @@ test('package type module', async () => {
   assert.is(stdout, 'foo')
 })
 
+test('import type module', async () => {
+  const { stdout } = await execa('node', [
+    '-r',
+    `${process.cwd()}/register.js`,
+    `${process.cwd()}/tests/import-type-module/index.js`,
+  ])
+  assert.is(stdout, 'foo')
+})
+
 test.run()
