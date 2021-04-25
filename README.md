@@ -1,5 +1,7 @@
 # esbuild-register
 
+[![npm version](https://badgen.net/npm/v/esbuild-register)](https://npm.im/esbuild-register) [![npm downloads](https://badgen.net/npm/dm/esbuild-register)](https://npm.im/esbuild-register)
+
 ## Install
 
 ```bash
