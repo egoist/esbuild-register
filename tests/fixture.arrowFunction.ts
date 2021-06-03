@@ -1,4 +1,4 @@
-const method = <T>() => {
+const method = () => {
   console.log("hello from ts");
 };
 
