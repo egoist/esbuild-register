@@ -4,7 +4,7 @@ specifiers:
   '@egoist/prettier-config': ^0.1.0
   '@types/node': ^14.0.23
   '@types/source-map-support': ^0.5.3
-  esbuild: ^0.12.8
+  esbuild: '>=0.12.14'
   execa: ^4.0.3
   joycon: ^2.2.5
   jsonc-parser: ^3.0.0
@@ -16,13 +16,13 @@ specifiers:
   uvu: ^0.2.2
 
 dependencies:
-  esbuild: 0.12.8
   jsonc-parser: 3.0.0
 
 devDependencies:
   '@egoist/prettier-config': 0.1.0
   '@types/node': 14.14.31
   '@types/source-map-support': 0.5.3
+  esbuild: 0.12.14
   execa: 4.1.0
   joycon: 2.2.5
   pirates: 4.0.1
@@ -317,11 +317,11 @@ packages:
       is-arrayish: 0.2.1
     dev: true
 
-  /esbuild/0.12.8:
-    resolution: {integrity: sha512-sx/LwlP/SWTGsd9G4RlOPrXnIihAJ2xwBUmzoqe2nWwbXORMQWtAGNJNYLBJJqa3e9PWvVzxdrtyFZJcr7D87g==}
+  /esbuild/0.12.14:
+    resolution: {integrity: sha512-z8p+6FGiplR7a3pPonXREbm+8IeXjBGvDpVidZmGB/AJMsJSfGCU+n7KOMCazA9AwvagadRWBhiKorC0w9WJvw==}
     hasBin: true
     requiresBuild: true
-    dev: false
+    dev: true
 
   /esbuild/0.9.2:
     resolution: {integrity: sha512-xE3oOILjnmN8PSjkG3lT9NBbd1DbxNqolJ5qNyrLhDWsFef3yTp/KTQz1C/x7BYFKbtrr9foYtKA6KA1zuNAUQ==}
