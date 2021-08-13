@@ -31,6 +31,6 @@
     "uvu": "^0.2.2"
   },
   "peerDependencies": {
-    "esbuild": "^0.12.8"
+    "esbuild": ">=0.12 <1"
   }
 }
