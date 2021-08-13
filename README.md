@@ -5,9 +5,11 @@
 ## Install
 
 ```bash
-npm i esbuild-register -D
+npm i esbuild esbuild-register -D
 # Or Yarn
-yarn add esbuild-register --dev
+yarn add esbuild esbuild-register --dev
+# Or pnpm
+pnpm add esbuild esbuild-register -D
 ```
 
 ## Usage
