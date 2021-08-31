@@ -1,7 +1,7 @@
 import { dirname, extname } from 'path'
 import type { RawSourceMap } from 'source-map'
 import sourceMapSupport from 'source-map-support'
-import { transformSync, TransformOptions } from 'esbuild'
+import { transformSync, TransformOptions, Loader } from 'esbuild'
 import { addHook } from 'pirates'
 import fs from 'fs';
 import module from 'module';
@@ -27,6 +27,10 @@ function installSourceMapSupport() {
 
 type COMPILE = (code: string, filename: string, format?: 'cjs' | 'esm') => string
 
+interface SystemError extends Error {
+  code?: string | undefined;
+}
+
 /**
  * Patch the Node CJS loader to suppress the ESM error
  * https://github.com/nodejs/node/blob/069b5df/lib/internal/modules/cjs/loader.js#L1125
@@ -42,7 +46,7 @@ function patchCommonJsLoader(compile: COMPILE) {
     try {
       return jsHandler.call(this, module, filename)
     } catch (error) {
-      if (error.code !== 'ERR_REQUIRE_ESM') {
+      if ((error as SystemError).code !== 'ERR_REQUIRE_ESM') {
         throw error;
       }
 
@@ -53,8 +57,7 @@ function patchCommonJsLoader(compile: COMPILE) {
   };
 }
 
-type LOADERS = 'js' | 'jsx' | 'ts' | 'tsx'
-const FILE_LOADERS = {
+const DEFAULT_FILE_LOADERS = {
   '.js': 'js',
   '.jsx': 'jsx',
   '.ts': 'ts',
@@ -62,27 +65,28 @@ const FILE_LOADERS = {
   '.mjs': 'js',
 } as const
 
-type EXTENSIONS = keyof typeof FILE_LOADERS
-
-const DEFAULT_EXTENSIONS = Object.keys(FILE_LOADERS)
-
-const getLoader = (filename: string): LOADERS =>
-  FILE_LOADERS[extname(filename) as EXTENSIONS]
-
 export function register(
-  esbuildOptions: TransformOptions & { extensions?: EXTENSIONS[] } = {},
+  esbuildOptions: TransformOptions & {
+    loaders?: { [ext: string]: Loader },
+    extensions?: string[],
+  } = {}
 ) {
-  const { extensions = DEFAULT_EXTENSIONS, ...overrides } = esbuildOptions
+  const {
+    loaders = DEFAULT_FILE_LOADERS,
+    extensions = Object.keys(loaders),
+    ...overrides
+  } = esbuildOptions
 
   const compile: COMPILE = function compile(code, filename, format) {
     const dir = dirname(filename)
     const options = getOptions(dir)
     format = format ?? inferPackageFormat(dir, filename)
+    const loader = loaders[extname(filename)]
 
     const { code: js, warnings, map: jsSourceMap } = transformSync(code, {
       sourcefile: filename,
       sourcemap: 'both',
-      loader: getLoader(filename),
+      loader,
       target: options.target,
       jsxFactory: options.jsxFactory,
       jsxFragment: options.jsxFragment,
