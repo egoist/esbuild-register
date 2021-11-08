@@ -107,18 +107,16 @@ export function register(
     return js
   }
 
-  return {
-    enabled(enabled: boolean) {
-      const revert = addHook(compile, {
-        exts: extensions,
-      })
+  const revert = addHook(compile, {
+    exts: extensions,
+  })
 
-      if (enabled === true) {
-        installSourceMapSupport()
-        patchCommonJsLoader(compile)
-      } else {
-        revert()
-      }
+  installSourceMapSupport()
+  patchCommonJsLoader(compile)
+
+  return {
+    unregister() {
+      revert()
     },
   }
 }
