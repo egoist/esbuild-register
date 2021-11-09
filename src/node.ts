@@ -6,6 +6,7 @@ import { addHook } from 'pirates'
 import fs from 'fs'
 import module from 'module'
 import { getOptions, inferPackageFormat } from './options'
+import { removeNodePrefix } from './utils'
 
 const map: { [file: string]: string | RawSourceMap } = {}
 
@@ -45,7 +46,7 @@ function patchCommonJsLoader(compile: COMPILE) {
   extensions['.js'] = function (module: any, filename: string) {
     try {
       return jsHandler.call(this, module, filename)
-    } catch (error) {
+    } catch (error: any) {
       if (error.code !== 'ERR_REQUIRE_ESM') {
         throw error
       }
@@ -104,7 +105,8 @@ export function register(
         console.log(warning.text)
       }
     }
-    return js
+    if (format === 'esm') return js
+    return removeNodePrefix(js)
   }
 
   const revert = addHook(compile, {
