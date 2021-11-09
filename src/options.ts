@@ -20,7 +20,7 @@ export const getOptions = (
     return {
       jsxFactory: data.compilerOptions?.jsxFactory,
       jsxFragment: data.compilerOptions?.jsxFragmentFactory,
-      target: data.compilerOptions?.target,
+      target: data.compilerOptions?.target?.toLowerCase(),
     }
   }
   return {}
