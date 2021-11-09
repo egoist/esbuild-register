@@ -33,10 +33,17 @@ to shorten the command, now just run `yarn ts file.ts` instead.
 ```ts
 const { register } = require('esbuild-register/dist/node')
 
-register({
+const { unregister } = register({
   // ...options
 })
+
+// Unregister the require hook if you don't need it anymore
+unregister()
 ```
+
+## Sponsors
+
+[![sponsors](https://sponsors-images.egoist.sh/sponsors.svg)](https://github.com/sponsors/egoist)
 
 ## License
 
