@@ -74,10 +74,26 @@ const DEFAULT_EXTENSIONS = Object.keys(FILE_LOADERS)
 const getLoader = (filename: string): LOADERS =>
   FILE_LOADERS[extname(filename) as EXTENSIONS]
 
-export function register(
-  esbuildOptions: TransformOptions & { extensions?: EXTENSIONS[] } = {},
-) {
-  const { extensions = DEFAULT_EXTENSIONS, ...overrides } = esbuildOptions
+interface RegisterOptions extends TransformOptions {
+  extensions?: EXTENSIONS[]
+  /**
+   * Auto-ignore node_modules. Independent of any matcher.
+   * @default true
+   */
+  hookIgnoreNodeModules?: boolean
+  /**
+   * A matcher function, will be called with path to a file. Should return truthy if the file should be hooked, falsy otherwise.
+   */
+  hookMatcher?(fileName: string): boolean
+}
+
+export function register(esbuildOptions: RegisterOptions = {}) {
+  const {
+    extensions = DEFAULT_EXTENSIONS,
+    hookIgnoreNodeModules = true,
+    hookMatcher,
+    ...overrides
+  } = esbuildOptions
 
   const compile: COMPILE = function compile(code, filename, format) {
     const dir = dirname(filename)
@@ -111,6 +127,8 @@ export function register(
 
   const revert = addHook(compile, {
     exts: extensions,
+    ignoreNodeModules: hookIgnoreNodeModules,
+    matcher: hookMatcher,
   })
 
   installSourceMapSupport()
