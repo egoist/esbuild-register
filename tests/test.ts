@@ -47,4 +47,22 @@ test('import type module', async () => {
   assert.is(stdout, 'foo')
 })
 
+test('import TypeScript npm module', async () => {
+  const { stdout } = await execa('node', [
+    '-r',
+    `${process.cwd()}/tests/fixture-register/register-with-node_modules.js`,
+    `${process.cwd()}/tests/import-typescript-module/index.js`,
+  ])
+  assert.is(stdout, 'hello from typescript in node_modules')
+})
+
+test('import TypeScript npm module with matcher', async () => {
+  const { stdout } = await execa('node', [
+    '-r',
+    `${process.cwd()}/tests/fixture-register/register-with-matcher.js`,
+    `${process.cwd()}/tests/import-typescript-module/index.js`,
+  ])
+  assert.is(stdout, 'hello from typescript in node_modules')
+})
+
 test.run()
