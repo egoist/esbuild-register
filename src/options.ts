@@ -37,5 +37,7 @@ export const inferPackageFormat = (
     return 'cjs'
   }
   const { data } = joycon.loadSync(['package.json'], cwd)
-  return data && data.type === 'module' ? 'esm' : 'cjs'
+  return data && data.type === 'module' && /\.m?js$/.test(filename)
+    ? 'esm'
+    : 'cjs'
 }
