@@ -1,10 +1,18 @@
 import { dirname, extname } from 'path'
 import type { RawSourceMap } from 'source-map'
 import sourceMapSupport from 'source-map-support'
-import { transformSync, TransformOptions } from 'esbuild'
+import {
+  transformSync,
+  TransformOptions,
+  buildSync,
+  BuildOptions,
+  Message,
+  formatMessagesSync,
+} from 'esbuild'
 import { addHook } from 'pirates'
 import fs from 'fs'
 import module from 'module'
+import process from 'process'
 import { getOptions, inferPackageFormat } from './options'
 import { removeNodePrefix } from './utils'
 
@@ -75,6 +83,15 @@ const getLoader = (filename: string): LOADERS =>
   FILE_LOADERS[extname(filename) as EXTENSIONS]
 
 interface RegisterOptions extends TransformOptions {
+  /**
+   * Bundle all files into one by calling `esbuild.buildSync()`.
+   *
+   * Caveats:
+   * - Does not support plugins, etc.
+   * - `__dirname` and `__filename` may not work as expected.
+   * - `hookIgnoreNodeModules` and `hookMatcher` are ignored.
+   */
+  bundle?: boolean | BuildOptions
   extensions?: EXTENSIONS[]
   /**
    * Auto-ignore node_modules. Independent of any matcher.
@@ -89,6 +106,7 @@ interface RegisterOptions extends TransformOptions {
 
 export function register(esbuildOptions: RegisterOptions = {}) {
   const {
+    bundle = process.env['ESBUILD_REGISTER'] === '--bundle',
     extensions = DEFAULT_EXTENSIONS,
     hookIgnoreNodeModules = true,
     hookMatcher,
@@ -100,27 +118,52 @@ export function register(esbuildOptions: RegisterOptions = {}) {
     const options = getOptions(dir)
     format = format ?? inferPackageFormat(dir, filename)
 
-    const {
-      code: js,
-      warnings,
-      map: jsSourceMap,
-    } = transformSync(code, {
-      sourcefile: filename,
-      sourcemap: 'both',
-      loader: getLoader(filename),
-      target: options.target,
-      jsxFactory: options.jsxFactory,
-      jsxFragment: options.jsxFragment,
-      format,
-      ...overrides,
-    })
-    map[filename] = jsSourceMap
-    if (warnings && warnings.length > 0) {
-      for (const warning of warnings) {
-        console.log(warning.location)
-        console.log(warning.text)
+    let js = ''
+    let warnings: Message[]
+    if (!bundle) {
+      const result = transformSync(code, {
+        sourcefile: filename,
+        sourcemap: 'both',
+        loader: getLoader(filename),
+        target: options.target,
+        jsxFactory: options.jsxFactory,
+        jsxFragment: options.jsxFragment,
+        format,
+        ...overrides,
+      })
+      js = result.code
+      map[filename] = result.map
+      warnings = result.warnings
+    } else {
+      const result = buildSync({
+        entryPoints: [filename],
+        bundle: true,
+        sourcemap: 'inline',
+        platform: 'node',
+        write: false,
+        target: options.target,
+        jsxFactory: options.jsxFactory,
+        jsxFragment: options.jsxFragment,
+        format,
+        ...(typeof bundle === 'object' ? bundle : null),
+      })
+      if (result.outputFiles && result.outputFiles[0]) {
+        js = result.outputFiles[0].text
+        // todo: external sourcemaps
+      }
+      warnings = result.warnings
+    }
+
+    if (warnings.length > 0) {
+      const strings = formatMessagesSync(warnings, {
+        kind: 'warning',
+        color: true,
+      })
+      for (const string of strings) {
+        console.warn(string)
       }
     }
+
     if (format === 'esm') return js
     return removeNodePrefix(js)
   }

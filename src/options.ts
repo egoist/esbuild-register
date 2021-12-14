@@ -1,4 +1,5 @@
 import fs from 'fs'
+import process from 'process'
 import JoyCon from 'joycon'
 import { parse } from 'jsonc-parser'
 
@@ -20,7 +21,9 @@ export const getOptions = (
     return {
       jsxFactory: data.compilerOptions?.jsxFactory,
       jsxFragment: data.compilerOptions?.jsxFragmentFactory,
-      target: data.compilerOptions?.target?.toLowerCase(),
+      target:
+        data.compilerOptions?.target?.toLowerCase() ??
+        `node${process.versions.node}`,
     }
   }
   return {}
