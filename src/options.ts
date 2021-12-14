@@ -43,3 +43,15 @@ export const inferPackageFormat = (
     ? 'esm'
     : 'cjs'
 }
+
+export const inferExternal = (cwd: string): string[] => {
+  const { data } = joycon.loadSync(['package.json'], cwd)
+  if (data) {
+    return Object.keys({
+      ...data.dependencies,
+      ...data.devDependencies,
+      ...data.peerDependencies,
+    })
+  }
+  return []
+}

@@ -12,7 +12,7 @@ import {
 import { addHook } from 'pirates'
 import fs from 'fs'
 import module from 'module'
-import { getOptions, inferPackageFormat } from './options'
+import { getOptions, inferExternal, inferPackageFormat } from './options'
 import { removeNodePrefix } from './utils'
 
 const map: { [file: string]: string | RawSourceMap } = {}
@@ -137,6 +137,7 @@ export function register(esbuildOptions: RegisterOptions = {}) {
       const result = buildSync({
         entryPoints: [filename],
         bundle: true,
+        external: hookIgnoreNodeModules ? inferExternal(dir) : [],
         sourcemap: 'inline',
         platform: 'node',
         write: false,
