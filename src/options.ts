@@ -1,5 +1,4 @@
 import fs from 'fs'
-import process from 'process'
 import JoyCon from 'joycon'
 import { parse } from 'jsonc-parser'
 

@@ -12,7 +12,6 @@ import {
 import { addHook } from 'pirates'
 import fs from 'fs'
 import module from 'module'
-import process from 'process'
 import { getOptions, inferPackageFormat } from './options'
 import { removeNodePrefix } from './utils'
 
