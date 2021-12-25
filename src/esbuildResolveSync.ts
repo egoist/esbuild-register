@@ -1,5 +1,5 @@
-import { buildSync } from "esbuild"
-import Module from "module"
+import { buildSync } from 'esbuild'
+import Module from 'module'
 import path from 'path'
 
 export const esbuildResolveSync = (id: string, parent: Module) => {
@@ -28,8 +28,9 @@ export const esbuildResolveSync = (id: string, parent: Module) => {
       '.ctsx': 'text',
     },
   })
-  
-  const result = meta.metafile?.inputs && path.resolve(Object.keys(meta.metafile.inputs)[0])
+
+  const result =
+    meta.metafile?.inputs && path.resolve(Object.keys(meta.metafile.inputs)[0])
 
   return result
 }

@@ -135,28 +135,28 @@ export function register(esbuildOptions: RegisterOptions = {}) {
   installSourceMapSupport()
   patchCommonJsLoader(compile)
 
-  const Module = require('module');
-  const originalResolveFilename = Module._resolveFilename;
+  const Module = require('module')
+  const originalResolveFilename = Module._resolveFilename
 
-  const coreModules = new Set(Module.builtinModules);
+  const coreModules = new Set(Module.builtinModules)
 
   Module._resolveFilename = function (request: string, parent: any): string {
     if (!parent) {
-      return originalResolveFilename.apply(this, arguments); 
+      return originalResolveFilename.apply(this, arguments)
     }
 
-    const isCoreModule = coreModules.has(request);
+    const isCoreModule = coreModules.has(request)
     if (!isCoreModule) {
-      const found = esbuildResolveSync(request, parent);
+      const found = esbuildResolveSync(request, parent)
       if (found) {
-        const modifiedArguments = [found, ...[].slice.call(arguments, 1)]; // Passes all arguments. Even those that is not specified above.
+        const modifiedArguments = [found, ...[].slice.call(arguments, 1)] // Passes all arguments. Even those that is not specified above.
         // tslint:disable-next-line:no-invalid-this
-        return originalResolveFilename.apply(this, modifiedArguments);
+        return originalResolveFilename.apply(this, modifiedArguments)
       }
     }
     // tslint:disable-next-line:no-invalid-this
-    return originalResolveFilename.apply(this, arguments);
-  };
+    return originalResolveFilename.apply(this, arguments)
+  }
 
   return {
     unregister() {
