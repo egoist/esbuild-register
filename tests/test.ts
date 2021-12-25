@@ -77,4 +77,19 @@ test('tsconfig-paths', async() => {
   assert.equal(stdout, 'foo1\nfoo1')
 })
 
+test('tsconfig-paths handles not found', async() => {
+  const cwd2 = `${process.cwd()}/tests/tsconfig-paths`
+
+  const { stderr } = await execa('node', [
+    '-r',
+    `${process.cwd()}/register.js`,
+    `${process.cwd()}/tests/tsconfig-paths/src/utils/notfound.ts`,
+  ], {
+    cwd: cwd2,
+    reject: false,
+  })
+  assert.ok(stderr.includes(`Error: Cannot find module '@apis/foos'`))
+})
+
+
 test.run()
