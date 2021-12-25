@@ -7,6 +7,7 @@ import fs from 'fs'
 import module from 'module'
 import { getOptions, inferPackageFormat } from './options'
 import { removeNodePrefix } from './utils'
+import { esbuildResolveSync } from './esbuildResolveSync'
 
 const map: { [file: string]: string | RawSourceMap } = {}
 
@@ -134,9 +135,33 @@ export function register(esbuildOptions: RegisterOptions = {}) {
   installSourceMapSupport()
   patchCommonJsLoader(compile)
 
+  const Module = require('module');
+  const originalResolveFilename = Module._resolveFilename;
+
+  const coreModules = new Set(Module.builtinModules);
+
+  Module._resolveFilename = function (request: string, parent: any): string {
+    if (!parent) {
+      return originalResolveFilename.apply(this, arguments); 
+    }
+
+    const isCoreModule = coreModules.has(request);
+    if (!isCoreModule) {
+      const found = esbuildResolveSync(request, parent);
+      if (found) {
+        const modifiedArguments = [found, ...[].slice.call(arguments, 1)]; // Passes all arguments. Even those that is not specified above.
+        // tslint:disable-next-line:no-invalid-this
+        return originalResolveFilename.apply(this, modifiedArguments);
+      }
+    }
+    // tslint:disable-next-line:no-invalid-this
+    return originalResolveFilename.apply(this, arguments);
+  };
+
   return {
     unregister() {
       revert()
+      Module._resolveFilename = originalResolveFilename
     },
   }
 }

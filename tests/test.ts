@@ -65,4 +65,16 @@ test('import TypeScript npm module with matcher', async () => {
   assert.is(stdout, 'hello from typescript in node_modules')
 })
 
+test('tsconfig-paths', async() => {
+  const cwd2 = `${process.cwd()}/tests/tsconfig-paths`
+  const { stdout } = await execa('node', [
+    '-r',
+    `${process.cwd()}/register.js`,
+    `${process.cwd()}/tests/tsconfig-paths/src/utils/fixture.ts`,
+  ], {
+    cwd: cwd2,
+  })
+  assert.equal(stdout, 'foo1\nfoo1')
+})
+
 test.run()
