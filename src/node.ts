@@ -7,7 +7,7 @@ import fs from 'fs'
 import module from 'module'
 import { getOptions, inferPackageFormat } from './options'
 import { removeNodePrefix } from './utils'
-import { esbuildResolveSync } from './esbuildResolveSync'
+import { loadConfig, createMatchPath } from 'tsconfig-paths'
 
 const map: { [file: string]: string | RawSourceMap } = {}
 
@@ -140,14 +140,26 @@ export function register(esbuildOptions: RegisterOptions = {}) {
 
   const coreModules = new Set(Module.builtinModules)
 
+  const config = loadConfig('.')
+
+  const matchPath =
+    config.resultType === 'failed'
+      ? undefined
+      : createMatchPath(
+          config.absoluteBaseUrl,
+          config.paths,
+          config.mainFields,
+          config.addMatchAll,
+        )
+
   Module._resolveFilename = function (request: string, parent: any): string {
-    if (!parent) {
+    if (!parent || matchPath === undefined) {
       return originalResolveFilename.apply(this, arguments)
     }
 
     const isCoreModule = coreModules.has(request)
     if (!isCoreModule) {
-      const found = esbuildResolveSync(request, parent)
+      const found = matchPath(request)
       if (found) {
         const modifiedArguments = [found, ...[].slice.call(arguments, 1)] // Passes all arguments. Even those that is not specified above.
         // tslint:disable-next-line:no-invalid-this
