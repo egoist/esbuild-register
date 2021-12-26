@@ -135,10 +135,10 @@ export function register(esbuildOptions: RegisterOptions = {}) {
   installSourceMapSupport()
   patchCommonJsLoader(compile)
 
-  const Module = require('module')
-  const originalResolveFilename = Module._resolveFilename
+  // @ts-expect-error undocumented api
+  const originalResolveFilename = module.Module._resolveFilename
 
-  const coreModules = new Set(Module.builtinModules)
+  const coreModules = new Set(module.Module.builtinModules)
 
   const config = loadConfig('.')
 
@@ -152,28 +152,30 @@ export function register(esbuildOptions: RegisterOptions = {}) {
           config.addMatchAll,
         )
 
-  Module._resolveFilename = function (request: string, parent: any): string {
+  // @ts-expect-error undocumented api
+  module.Module._resolveFilename = function (
+    request: string,
+    parent: any,
+  ): string {
     if (!parent || matchPath === undefined) {
       return originalResolveFilename.apply(this, arguments)
     }
 
-    const isCoreModule = coreModules.has(request)
-    if (!isCoreModule) {
+    if (!coreModules.has(request)) {
       const found = matchPath(request)
       if (found) {
         const modifiedArguments = [found, ...[].slice.call(arguments, 1)] // Passes all arguments. Even those that is not specified above.
-        // tslint:disable-next-line:no-invalid-this
         return originalResolveFilename.apply(this, modifiedArguments)
       }
     }
-    // tslint:disable-next-line:no-invalid-this
     return originalResolveFilename.apply(this, arguments)
   }
 
   return {
     unregister() {
       revert()
-      Module._resolveFilename = originalResolveFilename
+      // @ts-expect-error undocumented api
+      module.Module._resolveFilename = originalResolveFilename
     },
   }
 }
