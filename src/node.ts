@@ -7,6 +7,7 @@ import fs from 'fs'
 import module from 'module'
 import { getOptions, inferPackageFormat } from './options'
 import { removeNodePrefix } from './utils'
+import { loadConfig, createMatchPath } from 'tsconfig-paths'
 
 const map: { [file: string]: string | RawSourceMap } = {}
 
@@ -134,9 +135,47 @@ export function register(esbuildOptions: RegisterOptions = {}) {
   installSourceMapSupport()
   patchCommonJsLoader(compile)
 
+  // @ts-expect-error undocumented api
+  const originalResolveFilename = module.Module._resolveFilename
+
+  const coreModules = new Set(module.Module.builtinModules)
+
+  const config = loadConfig('.')
+
+  const matchPath =
+    config.resultType === 'failed'
+      ? undefined
+      : createMatchPath(
+          config.absoluteBaseUrl,
+          config.paths,
+          config.mainFields,
+          config.addMatchAll,
+        )
+
+  // @ts-expect-error undocumented api
+  module.Module._resolveFilename = function (
+    request: string,
+    parent: any,
+  ): string {
+    if (!parent || matchPath === undefined) {
+      return originalResolveFilename.apply(this, arguments)
+    }
+
+    if (!coreModules.has(request)) {
+      const found = matchPath(request)
+      if (found) {
+        const modifiedArguments = [found, ...[].slice.call(arguments, 1)] // Passes all arguments. Even those that is not specified above.
+        return originalResolveFilename.apply(this, modifiedArguments)
+      }
+    }
+    return originalResolveFilename.apply(this, arguments)
+  }
+
   return {
     unregister() {
       revert()
+      // @ts-expect-error undocumented api
+      module.Module._resolveFilename = originalResolveFilename
     },
   }
 }
