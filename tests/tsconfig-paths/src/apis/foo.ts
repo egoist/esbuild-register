@@ -1,5 +1,5 @@
-import { f } from './fuck';
+import { bar } from './bar'
 
 export const foo = () => {
-  console.info('foo' + f)
+  console.info('foo' + bar)
 }
