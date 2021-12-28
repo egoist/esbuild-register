@@ -1,3 +1,5 @@
+import stripJsonComments from 'strip-json-comments'
+
 const nodeVersion = (process.versions.node.match(/^(\d+)\.(\d+)/) || [])
   .slice(1)
   .map(Number)
@@ -11,4 +13,14 @@ export function removeNodePrefix(code: string) {
     )
   }
   return code
+}
+
+export function jsoncParse(data: string) {
+  try {
+    return new Function('return ' + stripJsonComments(data).trim())()
+  } catch (_) {
+    // Silently ignore any error
+    // That's what tsc/jsonc-parser did after all
+    return {}
+  }
 }

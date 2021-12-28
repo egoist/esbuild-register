@@ -7,17 +7,14 @@ specifiers:
   esbuild: ^0.12.8
   execa: ^4.0.3
   joycon: ^2.2.5
-  jsonc-parser: ^3.0.0
   pirates: ^4.0.1
   source-map: ^0.6.0
   source-map-support: ^0.5.19
+  strip-json-comments: ^4.0.0
   tsconfig-paths: ^3.12.0
   tsup: ^4.7.1
   typescript: ^4.2.2
   uvu: ^0.2.2
-
-dependencies:
-  jsonc-parser: 3.0.0
 
 devDependencies:
   '@egoist/prettier-config': 0.1.0
@@ -29,6 +26,7 @@ devDependencies:
   pirates: 4.0.1
   source-map: 0.6.1
   source-map-support: 0.5.19
+  strip-json-comments: 4.0.0
   tsconfig-paths: 3.12.0
   tsup: 4.7.1_typescript@4.2.2
   typescript: 4.2.2
@@ -563,10 +561,6 @@ packages:
       minimist: 1.2.5
     dev: true
 
-  /jsonc-parser/3.0.0:
-    resolution: {integrity: sha512-fQzRfAbIBnR0IQvftw9FJveWiHp72Fg20giDrHz6TdfB12UH/uue0D3hm57UB5KgAVuniLMCaS8P1IMj9NR7cA==}
-    dev: false
-
   /kleur/4.1.4:
     resolution: {integrity: sha512-8QADVssbrFjivHWQU7KkMgptGTl6WAcSdlbBPY4uNF+mWr6DGcKrvY2w4FQJoXch7+fKMjj0dRrL75vk3k23OA==}
     engines: {node: '>=6'}
@@ -814,6 +808,11 @@ packages:
   /strip-final-newline/2.0.0:
     resolution: {integrity: sha512-BrpvfNAE3dcvq7ll3xVumzjKjZQ5tI1sEUIKr3Uoks0XUl45St3FlatVqef9prk4jRDzhW6WZg+3bk93y6pLjA==}
     engines: {node: '>=6'}
+    dev: true
+
+  /strip-json-comments/4.0.0:
+    resolution: {integrity: sha512-LzWcbfMbAsEDTRmhjWIioe8GcDRl0fa35YMXFoJKDdiD/quGFmjJjdgPjFJJNwCMaLyQqFIDqCdHD2V4HfLgYA==}
+    engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
     dev: true
 
   /sucrase/3.17.1:
