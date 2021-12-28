@@ -1,6 +1,17 @@
+import path from 'path'
+import fs from 'fs'
+import { tmpdir } from 'os'
 import { test } from 'uvu'
 import assert from 'uvu/assert'
 import execa from 'execa'
+
+const realFs = (dir: string, files: Record<string, string>) => {
+  for (const [name, content] of Object.entries(files)) {
+    const file = path.join(dir, name)
+    fs.mkdirSync(path.dirname(file), { recursive: true })
+    fs.writeFileSync(file, content)
+  }
+}
 
 test('register', async () => {
   const { stdout } = await execa('node', [
@@ -97,6 +108,22 @@ test('tsconfig-paths handles not found', async () => {
     },
   )
   assert.ok(stderr.includes(`Error: Cannot find module '@apis/foos'`))
+})
+
+test('works without tsconfig', async () => {
+  const cwd = `${tmpdir()}/${Date.now()}-without-tsconfig-paths`
+  realFs(cwd, {
+    'index.ts': `console.log('hi' as any)`,
+  })
+
+  const { stdout } = await execa(
+    'node',
+    ['-r', `${process.cwd()}/register.js`, `./index.ts`],
+    {
+      cwd,
+    },
+  )
+  assert.ok(stdout.includes('hi'))
 })
 
 test.run()

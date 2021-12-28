@@ -14,8 +14,7 @@
     "prepublishOnly": "npm run build"
   },
   "dependencies": {
-    "jsonc-parser": "^3.0.0",
-    "tsconfig-paths": "^3.12.0"
+    "jsonc-parser": "^3.0.0"
   },
   "devDependencies": {
     "@egoist/prettier-config": "^0.1.0",
@@ -27,6 +26,7 @@
     "pirates": "^4.0.1",
     "source-map": "^0.6.0",
     "source-map-support": "^0.5.19",
+    "tsconfig-paths": "^3.12.0",
     "tsup": "^4.7.1",
     "typescript": "^4.2.2",
     "uvu": "^0.2.2"
