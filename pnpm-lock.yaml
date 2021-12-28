@@ -14,7 +14,7 @@ specifiers:
   tsconfig-paths: ^3.12.0
   tsup: ^4.7.1
   typescript: ^4.2.2
-  uvu: ^0.2.2
+  uvu: 0.5.2
 
 devDependencies:
   '@egoist/prettier-config': 0.1.0
@@ -30,7 +30,7 @@ devDependencies:
   tsconfig-paths: 3.12.0
   tsup: 4.7.1_typescript@4.2.2
   typescript: 4.2.2
-  uvu: 0.2.3
+  uvu: 0.5.2
 
 packages:
 
@@ -292,13 +292,13 @@ packages:
     engines: {node: '>=0.10.0'}
     dev: true
 
-  /dequal/1.0.1:
-    resolution: {integrity: sha512-Fx8jxibzkJX2aJgyfSdLhr9tlRoTnHKrRJuu2XHlAgKioN2j19/Bcbe0d4mFXYZ3+wpE2KVobUVTfDutcD17xQ==}
+  /dequal/2.0.2:
+    resolution: {integrity: sha512-q9K8BlJVxK7hQYqa6XISGmBZbtQQWVXSrRrWreHC94rMt1QL/Impruc+7p2CYSYuVIUr+YCt6hjrs1kkdJRTug==}
     engines: {node: '>=6'}
     dev: true
 
-  /diff/4.0.2:
-    resolution: {integrity: sha512-58lmxKSA4BNyLz+HHMUzlOEpg09FV+ev6ZMe3vJihgdxzgcwZ8VoEEPmALCZG9LmqfVoNMMKpttIYTVG6uDY7A==}
+  /diff/5.0.0:
+    resolution: {integrity: sha512-/VTCrvm5Z0JGty/BWHljh+BAiw3IK+2j87NGMu8Nwc/f48WoDAC395uomO9ZD117ZOBaHmkX1oyLvkVM/aIT3w==}
     engines: {node: '>=0.3.1'}
     dev: true
 
@@ -390,6 +390,7 @@ packages:
     resolution: {integrity: sha512-xiqMQR4xAeHTuB9uWm+fFRcIOgKBMiOBP+eXiyT7jsgVCq1bkVygt00oASowB7EdtpOHaaPgKt812P9ab+DDKA==}
     engines: {node: ^8.16.0 || ^10.6.0 || >=11.0.0}
     os: [darwin]
+    requiresBuild: true
     dev: true
     optional: true
 
@@ -862,8 +863,8 @@ packages:
       is-number: 7.0.0
     dev: true
 
-  /totalist/1.1.0:
-    resolution: {integrity: sha512-gduQwd1rOdDMGxFG1gEvhV88Oirdo2p+KjoYFU7k2g+i7n6AFFbDQ5kMPUsW0pNbfQsB/cwXvT1i4Bue0s9g5g==}
+  /totalist/2.0.0:
+    resolution: {integrity: sha512-+Y17F0YzxfACxTyjfhnJQEe7afPA0GSpYlFkl2VFMxYP7jshQf9gXV7cH47EfToBumFThfKBvfAcoUn6fdNeRQ==}
     engines: {node: '>=6'}
     dev: true
 
@@ -909,16 +910,16 @@ packages:
     hasBin: true
     dev: true
 
-  /uvu/0.2.3:
-    resolution: {integrity: sha512-cz4a54PlsOQVRLJCYztAiZU7OWRJedyCVQ1kRIeeey5Sibh+DLyN3lVh2dtOJcCrV5dfJIWTWwecvjGqwdqCtA==}
+  /uvu/0.5.2:
+    resolution: {integrity: sha512-m2hLe7I2eROhh+tm3WE5cTo/Cv3WQA7Oc9f7JB6uWv+/zVKvfAm53bMyOoGOSZeQ7Ov2Fu9pLhFr7p07bnT20w==}
     engines: {node: '>=8'}
     hasBin: true
     dependencies:
-      dequal: 1.0.1
-      diff: 4.0.2
+      dequal: 2.0.2
+      diff: 5.0.0
       kleur: 4.1.4
       sade: 1.7.4
-      totalist: 1.1.0
+      totalist: 2.0.0
     dev: true
 
   /which/2.0.2:
