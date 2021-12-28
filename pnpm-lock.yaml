@@ -8,7 +8,7 @@ specifiers:
   execa: ^4.0.3
   joycon: ^2.2.5
   pirates: ^4.0.1
-  source-map: ^0.6.0
+  source-map: 0.7.3
   source-map-support: ^0.5.19
   strip-json-comments: ^4.0.0
   tsconfig-paths: ^3.12.0
@@ -24,7 +24,7 @@ devDependencies:
   execa: 4.1.0
   joycon: 2.2.5
   pirates: 4.0.1
-  source-map: 0.6.1
+  source-map: 0.7.3
   source-map-support: 0.5.19
   strip-json-comments: 4.0.0
   tsconfig-paths: 3.12.0
@@ -390,6 +390,7 @@ packages:
     resolution: {integrity: sha512-xiqMQR4xAeHTuB9uWm+fFRcIOgKBMiOBP+eXiyT7jsgVCq1bkVygt00oASowB7EdtpOHaaPgKt812P9ab+DDKA==}
     engines: {node: ^8.16.0 || ^10.6.0 || >=11.0.0}
     os: [darwin]
+    requiresBuild: true
     dev: true
     optional: true
 
@@ -798,6 +799,11 @@ packages:
   /source-map/0.6.1:
     resolution: {integrity: sha512-UjgapumWlbMhkBgzT7Ykc5YXUT46F0iKu8SGXq0bcwP5dz/h0Plj6enJqjz1Zbq2l5WaqYnrVbwWOWMyF3F47g==}
     engines: {node: '>=0.10.0'}
+    dev: true
+
+  /source-map/0.7.3:
+    resolution: {integrity: sha512-CkCj6giN3S+n9qrYiBTX5gystlENnRW5jZeNLHpe6aue+SrHcG5VYwujhW9s4dY31mEGsxBDrHR6oI69fTXsaQ==}
+    engines: {node: '>= 8'}
     dev: true
 
   /strip-bom/3.0.0:
