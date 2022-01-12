@@ -5,6 +5,7 @@ import { transformSync, TransformOptions } from 'esbuild'
 import { addHook } from 'pirates'
 import fs from 'fs'
 import module from 'module'
+import process from 'process'
 import { getOptions, inferPackageFormat } from './options'
 import { removeNodePrefix } from './utils'
 import { registerTsconfigPaths } from './tsconfig-paths'
@@ -12,19 +13,23 @@ import { registerTsconfigPaths } from './tsconfig-paths'
 const map: { [file: string]: string | RawSourceMap } = {}
 
 function installSourceMapSupport() {
-  sourceMapSupport.install({
-    handleUncaughtExceptions: false,
-    environment: 'node',
-    retrieveSourceMap(file) {
-      if (map[file]) {
-        return {
-          url: file,
-          map: map[file],
+  if ((process as any).setSourceMapsEnabled) {
+    (process as any).setSourceMapsEnabled(true);
+  } else {
+    sourceMapSupport.install({
+      handleUncaughtExceptions: false,
+      environment: 'node',
+      retrieveSourceMap(file) {
+        if (map[file]) {
+          return {
+            url: file,
+            map: map[file],
+          }
         }
-      }
-      return null
-    },
-  })
+        return null
+      },
+    })
+  }
 }
 
 type COMPILE = (
