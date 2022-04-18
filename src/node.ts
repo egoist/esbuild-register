@@ -1,7 +1,8 @@
 import { dirname, extname } from 'path'
 import type { RawSourceMap } from 'source-map'
 import sourceMapSupport from 'source-map-support'
-import { transformSync, TransformOptions } from 'esbuild'
+import type { UrlAndMap } from 'source-map-support'
+import { buildSync, BuildOptions, OutputFile } from 'esbuild'
 import { addHook } from 'pirates'
 import fs from 'fs'
 import module from 'module'
@@ -24,7 +25,7 @@ function installSourceMapSupport() {
           return {
             url: file,
             map: map[file],
-          }
+          } as UrlAndMap
         }
         return null
       },
@@ -80,7 +81,7 @@ const DEFAULT_EXTENSIONS = Object.keys(FILE_LOADERS)
 const getLoader = (filename: string): LOADERS =>
   FILE_LOADERS[extname(filename) as EXTENSIONS]
 
-interface RegisterOptions extends TransformOptions {
+interface RegisterOptions extends BuildOptions {
   extensions?: EXTENSIONS[]
   /**
    * Auto-ignore node_modules. Independent of any matcher.
@@ -106,21 +107,26 @@ export function register(esbuildOptions: RegisterOptions = {}) {
     const options = getOptions(dir)
     format = format ?? inferPackageFormat(dir, filename)
 
-    const {
-      code: js,
-      warnings,
-      map: jsSourceMap,
-    } = transformSync(code, {
-      sourcefile: filename,
+    const buildResult = buildSync({
+      stdin: {
+        contents: code,
+        sourcefile: filename,
+        resolveDir: dirname(filename),
+        loader: getLoader(filename),
+      },
+      write: false,
+      outdir: 'temp',
       sourcemap: 'both',
-      loader: getLoader(filename),
       target: options.target,
       jsxFactory: options.jsxFactory,
       jsxFragment: options.jsxFragment,
       format,
       ...overrides,
     })
-    map[filename] = jsSourceMap
+    const outputFiles = buildResult.outputFiles as OutputFile[]
+    map[filename] = JSON.parse(outputFiles[0].text) as RawSourceMap
+    const js = outputFiles[1].text
+    const warnings = buildResult.warnings
     if (warnings && warnings.length > 0) {
       for (const warning of warnings) {
         console.log(warning.location)
@@ -139,7 +145,7 @@ export function register(esbuildOptions: RegisterOptions = {}) {
 
   installSourceMapSupport()
   patchCommonJsLoader(compile)
-
+  
   const unregisterTsconfigPaths = registerTsconfigPaths()
 
   return {
