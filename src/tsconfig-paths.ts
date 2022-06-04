@@ -4,7 +4,7 @@ import { loadConfig, createMatchPath } from 'tsconfig-paths'
 const noOp = () => {}
 
 export function registerTsconfigPaths(): () => void {
-  const configLoaderResult = loadConfig()
+  const configLoaderResult = loadConfig(process.cwd())
 
   if (configLoaderResult.resultType === 'failed') {
     return noOp
