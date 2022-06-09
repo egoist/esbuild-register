@@ -8,6 +8,10 @@
     "dist",
     "/register.js"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/egoist/esbuild-register.git"
+  },
   "scripts": {
     "build": "tsup src/node.ts --dts",
     "test": "npm run build && node -r ./register.js tests/test.ts",
