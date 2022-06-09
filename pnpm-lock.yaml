@@ -1,7 +1,7 @@
 lockfileVersion: 5.3
 
 specifiers:
-  '@egoist/prettier-config': ^0.1.0
+  '@egoist/prettier-config': 1.0.0
   '@types/node': ^14.0.23
   '@types/source-map-support': ^0.5.3
   esbuild: 0.14.8
@@ -17,7 +17,7 @@ specifiers:
   uvu: 0.5.2
 
 devDependencies:
-  '@egoist/prettier-config': 0.1.0
+  '@egoist/prettier-config': 1.0.0
   '@types/node': 14.14.31
   '@types/source-map-support': 0.5.3
   esbuild: 0.14.8
@@ -52,8 +52,8 @@ packages:
       js-tokens: 4.0.0
     dev: true
 
-  /@egoist/prettier-config/0.1.0:
-    resolution: {integrity: sha512-BYeixvJcTY/jOgawCgFOBxYBPP0e1WQPiyZw98BsUEjSI5SbdAguRKodqcyT50wie+HGk1EuhGUzC3lfrKL4Vg==}
+  /@egoist/prettier-config/1.0.0:
+    resolution: {integrity: sha512-D1Tp9Jv4aVoEo3cOAO966gFCI0wx/1lZ6sEHX8uMAfyVxuxD2+knGxhfGlb/FNLxWV3ifSI5hOmB/zFfsi7Rzw==}
     dev: true
 
   /@nodelib/fs.scandir/2.1.4:

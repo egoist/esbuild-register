@@ -14,7 +14,7 @@
     "prepublishOnly": "npm run build"
   },
   "devDependencies": {
-    "@egoist/prettier-config": "^0.1.0",
+    "@egoist/prettier-config": "1.0.0",
     "@types/node": "^14.0.23",
     "@types/source-map-support": "^0.5.3",
     "esbuild": "0.14.8",
