@@ -21,7 +21,7 @@
     "execa": "^4.0.3",
     "joycon": "^2.2.5",
     "pirates": "^4.0.1",
-    "source-map": "0.7.3",
+    "source-map": "0.7.4",
     "source-map-support": "^0.5.19",
     "strip-json-comments": "^4.0.0",
     "tsconfig-paths": "^3.12.0",
