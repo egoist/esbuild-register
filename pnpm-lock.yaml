@@ -2,7 +2,7 @@ lockfileVersion: 5.3
 
 specifiers:
   '@egoist/prettier-config': ^0.1.0
-  '@types/node': ^14.0.23
+  '@types/node': 16.11.41
   '@types/source-map-support': ^0.5.3
   esbuild: 0.14.8
   execa: ^4.0.3
@@ -18,7 +18,7 @@ specifiers:
 
 devDependencies:
   '@egoist/prettier-config': 0.1.0
-  '@types/node': 14.14.31
+  '@types/node': 16.11.41
   '@types/source-map-support': 0.5.3
   esbuild: 0.14.8
   execa: 4.1.0
@@ -112,8 +112,8 @@ packages:
     resolution: {integrity: sha1-7ihweulOEdK4J7y+UnC86n8+ce4=}
     dev: true
 
-  /@types/node/14.14.31:
-    resolution: {integrity: sha512-vFHy/ezP5qI0rFgJ7aQnjDXwAMrG0KqqIH7tQG5PPv3BWBayOPIQNBjVc/P6hhdZfMx51REc6tfDNXHUio893g==}
+  /@types/node/16.11.41:
+    resolution: {integrity: sha512-mqoYK2TnVjdkGk8qXAVGc/x9nSaTpSrFaGFm43BUH3IdoBV0nta6hYaGmdOvIMlbHJbUEVen3gvwpwovAZKNdQ==}
     dev: true
 
   /@types/parse-json/4.0.0:
@@ -123,7 +123,7 @@ packages:
   /@types/resolve/1.17.1:
     resolution: {integrity: sha512-yy7HuzQhj0dhGpD8RLXSZWEkLsV9ibvxvi6EiJ3bkqLAO1RGo0WbkWQiwpRlSFymTJRz0d3k5LM3kkx8ArDbLw==}
     dependencies:
-      '@types/node': 14.14.31
+      '@types/node': 16.11.41
     dev: true
 
   /@types/source-map-support/0.5.3:
