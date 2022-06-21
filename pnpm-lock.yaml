@@ -14,7 +14,7 @@ specifiers:
   tsconfig-paths: ^3.12.0
   tsup: ^4.7.1
   typescript: ^4.2.2
-  uvu: 0.5.2
+  uvu: 0.5.4
 
 devDependencies:
   '@egoist/prettier-config': 0.1.0
@@ -30,7 +30,7 @@ devDependencies:
   tsconfig-paths: 3.12.0
   tsup: 4.7.1_typescript@4.2.2
   typescript: 4.2.2
-  uvu: 0.5.2
+  uvu: 0.5.4
 
 packages:
 
@@ -1031,11 +1031,6 @@ packages:
       is-number: 7.0.0
     dev: true
 
-  /totalist/2.0.0:
-    resolution: {integrity: sha512-+Y17F0YzxfACxTyjfhnJQEe7afPA0GSpYlFkl2VFMxYP7jshQf9gXV7cH47EfToBumFThfKBvfAcoUn6fdNeRQ==}
-    engines: {node: '>=6'}
-    dev: true
-
   /ts-interface-checker/0.1.13:
     resolution: {integrity: sha512-Y/arvbn+rrz3JCKl9C4kVNfTfSm2/mEp5FSz5EsZSANGPSlQrpRI5M4PKF+mJnE52jOO90PnPSc3Ur3bTQw0gA==}
     dev: true
@@ -1078,8 +1073,8 @@ packages:
     hasBin: true
     dev: true
 
-  /uvu/0.5.2:
-    resolution: {integrity: sha512-m2hLe7I2eROhh+tm3WE5cTo/Cv3WQA7Oc9f7JB6uWv+/zVKvfAm53bMyOoGOSZeQ7Ov2Fu9pLhFr7p07bnT20w==}
+  /uvu/0.5.4:
+    resolution: {integrity: sha512-x1CyUjcP9VKaNPhjeB3FIc/jqgLsz2Q9LFhRzUTu/jnaaHILEGNuE0XckQonl8ISLcwyk9I2EZvWlYsQnwxqvQ==}
     engines: {node: '>=8'}
     hasBin: true
     dependencies:
@@ -1087,7 +1082,6 @@ packages:
       diff: 5.0.0
       kleur: 4.1.4
       sade: 1.7.4
-      totalist: 2.0.0
     dev: true
 
   /which/2.0.2:
