@@ -15,7 +15,12 @@ joycon.addLoader({
 export const getOptions = (
   cwd: string,
 ): { jsxFactory?: string; jsxFragment?: string; target?: string } => {
-  const { data, path } = joycon.loadSync(['tsconfig.json'], cwd)
+  let { data, path } = joycon.loadSync(["tsconfig.json"], cwd);
+
+  if (!path) {
+    ({ data, path } = joycon.loadSync(["jsconfig.json"], cwd));
+  }
+
   if (path && data) {
     return {
       jsxFactory: data.compilerOptions?.jsxFactory,
