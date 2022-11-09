@@ -10,6 +10,7 @@ import process from 'process'
 import { getOptions, inferPackageFormat } from './options'
 import { removeNodePrefix } from './utils'
 import { registerTsconfigPaths } from './tsconfig-paths'
+import { debug } from './debug'
 
 const map: { [file: string]: string | RawSourceMap } = {}
 
@@ -63,16 +64,20 @@ function patchCommonJsLoader(compile: COMPILE) {
       module._compile(content, filename)
     }
   }
+
+  return () => {
+    extensions['.js'] = jsHandler
+  }
 }
 
 type LOADERS = 'js' | 'jsx' | 'ts' | 'tsx'
-const FILE_LOADERS = {
+const FILE_LOADERS: Record<string, LOADERS> = {
   '.js': 'js',
   '.jsx': 'jsx',
   '.ts': 'ts',
   '.tsx': 'tsx',
   '.mjs': 'js',
-} as const
+}
 
 type EXTENSIONS = keyof typeof FILE_LOADERS
 
@@ -134,6 +139,9 @@ export function register(esbuildOptions: RegisterOptions = {}) {
     const outputFiles = buildResult.outputFiles as OutputFile[]
     map[filename] = JSON.parse(outputFiles[0].text) as RawSourceMap
     const js = outputFiles[1].text
+    debug('compiled %s', filename)
+    debug('%s', js)
+
     const warnings = buildResult.warnings
     if (warnings && warnings.length > 0) {
       for (const warning of warnings) {
@@ -152,13 +160,13 @@ export function register(esbuildOptions: RegisterOptions = {}) {
   })
 
   installSourceMapSupport()
-  patchCommonJsLoader(compile)
-
+  const unpatchCommonJsLoader = patchCommonJsLoader(compile)
   const unregisterTsconfigPaths = registerTsconfigPaths()
 
   return {
     unregister() {
       revert()
+      unpatchCommonJsLoader()
       unregisterTsconfigPaths()
     },
   }
