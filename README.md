@@ -20,14 +20,6 @@ node -r esbuild-register file.ts
 
 It will use `jsxFactory`, `jsxFragmentFactory` and `target` options from your `tsconfig.json`
 
-When using Yarn, you can add an npm script:
-
-```json
-"ts": "node -r esbuild-register"
-```
-
-to shorten the command, now just run `yarn ts file.ts` instead.
-
 ## Programmatic Usage
 
 ```ts
@@ -43,9 +35,8 @@ unregister()
 
 ## Sponsors
 
-[![sponsors](https://sponsors-images.egoist.sh/sponsors.svg)](https://github.com/sponsors/egoist)
+[![sponsors](https://sponsors-images.egoist.dev/sponsors.svg)](https://github.com/sponsors/egoist)
 
 ## License
 
-MIT &copy; [EGOIST](https://egoist.sh)
-w
+MIT &copy; [EGOIST](https://egoist.dev)
