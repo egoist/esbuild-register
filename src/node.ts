@@ -1,4 +1,4 @@
-import { dirname, extname } from 'path'
+import { dirname, extname, join } from 'path'
 import type { RawSourceMap } from 'source-map'
 import sourceMapSupport from 'source-map-support'
 import type { UrlAndMap } from 'source-map-support'
@@ -15,7 +15,7 @@ const map: { [file: string]: string | RawSourceMap } = {}
 
 function installSourceMapSupport() {
   if ((process as any).setSourceMapsEnabled) {
-    (process as any).setSourceMapsEnabled(true);
+    ;(process as any).setSourceMapsEnabled(true)
   } else {
     sourceMapSupport.install({
       handleUncaughtExceptions: false,
@@ -121,6 +121,14 @@ export function register(esbuildOptions: RegisterOptions = {}) {
       jsxFactory: options.jsxFactory,
       jsxFragment: options.jsxFragment,
       format,
+      define: {
+        'import.meta.url': 'esbuild_register_import_meta_url',
+        ...overrides.define,
+      },
+      inject: [
+        join(__dirname, '../assets/esbuild-inject.js'),
+        ...(overrides.inject || []),
+      ],
       ...overrides,
     })
     const outputFiles = buildResult.outputFiles as OutputFile[]
@@ -145,7 +153,7 @@ export function register(esbuildOptions: RegisterOptions = {}) {
 
   installSourceMapSupport()
   patchCommonJsLoader(compile)
-  
+
   const unregisterTsconfigPaths = registerTsconfigPaths()
 
   return {

@@ -126,4 +126,21 @@ test('works without tsconfig', async () => {
   assert.ok(stdout.includes('hi'))
 })
 
+test('import.meta.url support', async () => {
+  const cwd = `${tmpdir()}/${Date.now()}-import-meta-url`
+  realFs(cwd, {
+    'foo.ts': `console.log(import.meta.url)`,
+  })
+
+  const { stdout } = await execa(
+    'node',
+    ['-r', `${process.cwd()}/register.js`, `./foo.ts`],
+    {
+      cwd,
+    },
+  )
+  assert.not.throws(() => new URL(stdout))
+  assert.match(stdout, /foo\.ts/)
+})
+
 test.run()
