@@ -7,10 +7,17 @@
   "files": [
     "dist",
     "/register.js",
+    "/loader.js",
     "/assets"
   ],
+  "exports": {
+    ".": "./register.js",
+    "./loader": "./loader.js",
+    "./dist/node": "./dist/node.js",
+    "./dist/*": "./dist/*"
+  },
   "scripts": {
-    "build": "tsup src/node.ts --dts",
+    "build": "tsup src/node.ts src/loader.ts --dts",
     "test": "npm run build && node -r ./register.js tests/test.ts",
     "prepublishOnly": "npm run build"
   },

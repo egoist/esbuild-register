@@ -20,6 +20,14 @@ node -r esbuild-register file.ts
 
 It will use `jsxFactory`, `jsxFragmentFactory` and `target` options from your `tsconfig.json`
 
+### Experimental loader support
+
+When using in a project with `type: "module"` in `package.json`, you need the `--loader` flag to load TypeScript files:
+
+```bash
+node --loader esbuild-register/loader -r esbuild-register ./file.ts
+```
+
 ## Programmatic Usage
 
 ```ts

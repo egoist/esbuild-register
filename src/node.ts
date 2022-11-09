@@ -138,6 +138,7 @@ export function register(esbuildOptions: RegisterOptions = {}) {
       ],
       ...overrides,
     })
+
     const outputFiles = buildResult.outputFiles as OutputFile[]
     map[filename] = JSON.parse(outputFiles[0].text) as RawSourceMap
     const js = outputFiles[1].text
