@@ -77,6 +77,8 @@ const FILE_LOADERS: Record<string, LOADERS> = {
   '.ts': 'ts',
   '.tsx': 'tsx',
   '.mjs': 'js',
+  '.mts': 'ts',
+  '.cts': 'ts',
 }
 
 type EXTENSIONS = keyof typeof FILE_LOADERS
