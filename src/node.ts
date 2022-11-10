@@ -2,7 +2,7 @@ import { dirname, extname, join } from 'path'
 import type { RawSourceMap } from 'source-map'
 import sourceMapSupport from 'source-map-support'
 import type { UrlAndMap } from 'source-map-support'
-import { buildSync, BuildOptions, OutputFile } from 'esbuild'
+import { transformSync, TransformOptions } from 'esbuild'
 import { addHook } from 'pirates'
 import fs from 'fs'
 import module from 'module'
@@ -12,6 +12,7 @@ import { removeNodePrefix } from './utils'
 import { registerTsconfigPaths } from './tsconfig-paths'
 import { debug } from './debug'
 
+const IMPORT_META_URL_VARIABLE_NAME = '__esbuild_register_import_meta_url__'
 const map: { [file: string]: string | RawSourceMap } = {}
 
 function installSourceMapSupport() {
@@ -88,7 +89,7 @@ const DEFAULT_EXTENSIONS = Object.keys(FILE_LOADERS)
 const getLoader = (filename: string): LOADERS =>
   FILE_LOADERS[extname(filename) as EXTENSIONS]
 
-interface RegisterOptions extends BuildOptions {
+interface RegisterOptions extends TransformOptions {
   extensions?: EXTENSIONS[]
   /**
    * Auto-ignore node_modules. Independent of any matcher.
@@ -114,38 +115,29 @@ export function register(esbuildOptions: RegisterOptions = {}) {
     const options = getOptions(dir)
     format = format ?? inferPackageFormat(dir, filename)
 
-    const buildResult = buildSync({
-      stdin: {
-        contents: code,
-        sourcefile: filename,
-        resolveDir: dirname(filename),
-        loader: getLoader(filename),
-      },
-      write: false,
-      outdir: 'temp',
+    const result = transformSync(code, {
+      sourcefile: filename,
+      loader: getLoader(filename),
       sourcemap: 'both',
       target: options.target,
       jsxFactory: options.jsxFactory,
       jsxFragment: options.jsxFragment,
       format,
       define: {
-        'import.meta.url': 'esbuild_register_import_meta_url',
+        'import.meta.url': IMPORT_META_URL_VARIABLE_NAME,
         ...overrides.define,
       },
-      inject: [
-        join(__dirname, '../assets/esbuild-inject.js'),
-        ...(overrides.inject || []),
-      ],
+      banner: `const ${IMPORT_META_URL_VARIABLE_NAME} = require('url').pathToFileURL(__filename).href;${
+        overrides.banner || ''
+      }`,
       ...overrides,
     })
 
-    const outputFiles = buildResult.outputFiles as OutputFile[]
-    map[filename] = JSON.parse(outputFiles[0].text) as RawSourceMap
-    const js = outputFiles[1].text
+    const js = result.code
     debug('compiled %s', filename)
     debug('%s', js)
 
-    const warnings = buildResult.warnings
+    const warnings = result.warnings
     if (warnings && warnings.length > 0) {
       for (const warning of warnings) {
         console.log(warning.location)
