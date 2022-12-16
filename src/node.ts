@@ -111,6 +111,20 @@ export function register(esbuildOptions: RegisterOptions = {}) {
   } = esbuildOptions
 
   const compile: COMPILE = function compile(code, filename, format) {
+    const define = {
+      'import.meta.url': IMPORT_META_URL_VARIABLE_NAME,
+      ...overrides.define,
+    }
+    const banner = `const ${IMPORT_META_URL_VARIABLE_NAME} = require('url').pathToFileURL(__filename).href;${
+      overrides.banner || ''
+    }`
+
+    // For some reason if the code is already compiled by esbuild-register
+    // just return it as is
+    if (code.includes(banner)) {
+      return code
+    }
+
     const dir = dirname(filename)
     const options = getOptions(dir)
     format = format ?? inferPackageFormat(dir, filename)
@@ -123,13 +137,8 @@ export function register(esbuildOptions: RegisterOptions = {}) {
       jsxFactory: options.jsxFactory,
       jsxFragment: options.jsxFragment,
       format,
-      define: {
-        'import.meta.url': IMPORT_META_URL_VARIABLE_NAME,
-        ...overrides.define,
-      },
-      banner: `const ${IMPORT_META_URL_VARIABLE_NAME} = require('url').pathToFileURL(__filename).href;${
-        overrides.banner || ''
-      }`,
+      define,
+      banner,
       ...overrides,
     })
 
