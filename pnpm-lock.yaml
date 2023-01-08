@@ -8,7 +8,7 @@ specifiers:
   debug: ^4.3.4
   esbuild: 0.15.13
   execa: ^4.0.3
-  joycon: ^2.2.5
+  joycon: 3.1.1
   pirates: ^4.0.1
   source-map: 0.7.3
   source-map-support: ^0.5.19
@@ -28,7 +28,7 @@ devDependencies:
   '@types/source-map-support': 0.5.3
   esbuild: 0.15.13
   execa: 4.1.0
-  joycon: 2.2.5
+  joycon: 3.1.1
   pirates: 4.0.1
   source-map: 0.7.3
   source-map-support: 0.5.19
@@ -795,6 +795,11 @@ packages:
   /joycon/2.2.5:
     resolution: {integrity: sha512-YqvUxoOcVPnCp0VU1/56f+iKSdvIRJYPznH22BdXV3xMk75SFXhWeJkZ8C9XxUWt1b5x2X1SxuFygW1U0FmkEQ==}
     engines: {node: '>=6'}
+    dev: true
+
+  /joycon/3.1.1:
+    resolution: {integrity: sha512-34wB/Y7MW7bzjKRjUKTa46I2Z7eV62Rkhva+KkopW7Qvv/OSWBqvkSY7vusOPrNuZcUG3tApvdVgNB8POj3SPw==}
+    engines: {node: '>=10'}
     dev: true
 
   /js-tokens/4.0.0:

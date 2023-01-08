@@ -27,7 +27,7 @@
     "@types/source-map-support": "^0.5.3",
     "esbuild": "0.15.13",
     "execa": "^4.0.3",
-    "joycon": "^2.2.5",
+    "joycon": "3.1.1",
     "pirates": "^4.0.1",
     "source-map": "0.7.3",
     "source-map-support": "^0.5.19",
