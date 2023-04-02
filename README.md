@@ -20,6 +20,12 @@ node -r esbuild-register file.ts
 
 It will use `jsxFactory`, `jsxFragmentFactory` and `target` options from your `tsconfig.json`
 
+You can also pass a JSON string to specify configuration options for esbuild, such as if I want to pass in the banner configuration.
+
+```bash
+node -r esbuild-register file.ts --esbuild-config="{\"banner\": \"console.log('is banner')\"}"
+```
+
 ### Experimental loader support
 
 When using in a project with `type: "module"` in `package.json`, you need the `--loader` flag to load TypeScript files:
