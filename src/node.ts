@@ -127,6 +127,9 @@ export function register(esbuildOptions: RegisterOptions = {}) {
 
     const dir = dirname(filename)
     const options = getOptions(dir)
+    if(['jsx','tsx'].includes(extname(filename)) && options.jsxInject){
+      code=`${options.jsxInject}${code}`
+    }
     format = format ?? inferPackageFormat(dir, filename)
 
     const result = transformSync(code, {
