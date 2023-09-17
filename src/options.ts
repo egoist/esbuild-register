@@ -1,6 +1,7 @@
 import fs from 'fs'
 import JoyCon from 'joycon'
 import { jsoncParse } from './utils'
+import { TransformOptions } from 'esbuild'
 
 const joycon = new JoyCon()
 
@@ -14,15 +15,11 @@ joycon.addLoader({
 
 export const getOptions = (
   cwd: string,
-): { jsxFactory?: string; jsxFragment?: string; target?: string } => {
+): TransformOptions['tsconfigRaw'] => {
   const { data, path } = joycon.loadSync(["tsconfig.json", "jsconfig.json"], cwd);
 
   if (path && data) {
-    return {
-      jsxFactory: data.compilerOptions?.jsxFactory,
-      jsxFragment: data.compilerOptions?.jsxFragmentFactory,
-      target: data.compilerOptions?.target?.toLowerCase(),
-    }
+    return data
   }
   return {}
 }
