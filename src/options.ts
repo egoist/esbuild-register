@@ -14,7 +14,7 @@ joycon.addLoader({
 
 export const getOptions = (
   cwd: string,
-): { jsxFactory?: string; jsxFragment?: string; target?: string } => {
+): { jsxFactory?: string; jsxFragment?: string; target?: string, experimentalDecorators?: boolean } => {
   const { data, path } = joycon.loadSync(["tsconfig.json", "jsconfig.json"], cwd);
 
   if (path && data) {
@@ -22,6 +22,7 @@ export const getOptions = (
       jsxFactory: data.compilerOptions?.jsxFactory,
       jsxFragment: data.compilerOptions?.jsxFragmentFactory,
       target: data.compilerOptions?.target?.toLowerCase(),
+      experimentalDecorators: data.compilerOptions?.experimentalDecorators,
     }
   }
   return {}
