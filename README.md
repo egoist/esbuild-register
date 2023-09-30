@@ -18,7 +18,7 @@ pnpm add esbuild esbuild-register -D
 node -r esbuild-register file.ts
 ```
 
-It will use `jsxFactory`, `jsxFragmentFactory` and `target` options from your `tsconfig.json`
+It will use `jsxFactory`, `jsxFragmentFactory`, `target` and `experimentalDecorators` options from your `tsconfig.json`.
 
 ### Experimental loader support
 

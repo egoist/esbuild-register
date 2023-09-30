@@ -136,6 +136,7 @@ export function register(esbuildOptions: RegisterOptions = {}) {
       target: options.target,
       jsxFactory: options.jsxFactory,
       jsxFragment: options.jsxFragment,
+      experimentalDecorators: options.experimentalDecorators,
       format,
       define,
       banner,
