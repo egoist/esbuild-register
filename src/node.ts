@@ -112,7 +112,9 @@ export function register(esbuildOptions: RegisterOptions = {}) {
 
   const compile: COMPILE = function compile(code, filename, format) {
     const define = {
-      'import.meta.url': IMPORT_META_URL_VARIABLE_NAME,
+      // Computed property name is used because literally writing
+      // `import.meta.url` may be transformed by esbuild-register itself
+      ['IMPORT.META.URL'.toLowerCase()]: IMPORT_META_URL_VARIABLE_NAME,
       ...overrides.define,
     }
     const banner = `const ${IMPORT_META_URL_VARIABLE_NAME} = require('url').pathToFileURL(__filename).href;${
