@@ -113,7 +113,7 @@ export function register(esbuildOptions: RegisterOptions = {}) {
   const compile: COMPILE = function compile(code, filename, format) {
     const define = {
       // Computed property name is used because literally writing
-      // `import.meta.url` may be transformed by esbuild-register itself
+      // `import.meta.url` may be transformed during our build process
       ['IMPORT.META.URL'.toLowerCase()]: IMPORT_META_URL_VARIABLE_NAME,
       ...overrides.define,
     }
