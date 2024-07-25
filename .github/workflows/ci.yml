@@ -5,9 +5,9 @@ name: Node.js CI
 
 on:
   push:
-    branches: [master]
+    branches: [master, dev]
   pull_request:
-    branches: [master]
+    branches: [master, dev]
 
 jobs:
   build:
@@ -15,37 +15,23 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [18.x]
+        node-version: [20.x]
 
     steps:
       - uses: actions/checkout@v2
 
       - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
-
-      - name: Cache ~/.pnpm-store
-        uses: actions/cache@v2
-        env:
-          cache-name: cache-pnpm-store
-        with:
-          path: ~/.pnpm-store
-          key: ${{ runner.os }}-${{ matrix.node-version }}-build-${{ env.cache-name }}-${{ hashFiles('**/pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-${{ matrix.node-version }}-build-${{ env.cache-name }}-
-            ${{ runner.os }}-${{ matrix.node-version }}-build-
-            ${{ runner.os }}-
-
-      - name: Install pnpm
-        run: npm i -g pnpm
+          cache: pnpm
 
       - name: Install deps
         run: pnpm i
 
       - run: pnpm test
 
-      - run: pnpx semantic-release
+      - run: pnpm semantic-release --branches master
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
