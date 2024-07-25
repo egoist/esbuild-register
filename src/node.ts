@@ -126,16 +126,14 @@ export function register(esbuildOptions: RegisterOptions = {}) {
     }
 
     const dir = dirname(filename)
-    const options = getOptions(dir)
+    const tsconfigRaw = getOptions(dir)
     format = format ?? inferPackageFormat(dir, filename)
 
     const result = transformSync(code, {
       sourcefile: filename,
       loader: getLoader(filename),
       sourcemap: 'both',
-      target: options.target,
-      jsxFactory: options.jsxFactory,
-      jsxFragment: options.jsxFragment,
+      tsconfigRaw,
       format,
       define,
       banner,
